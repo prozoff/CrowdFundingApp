@@ -1,0 +1,62 @@
+﻿@model IEnumerable<CrowdFundingApp.Models.User>
+@{
+    ViewBag.Title = "User List";
+}
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <form method="post">
+        <div class="nl">
+
+            <button type="submit" class="btn btn-sm btn-primary" asp-action="Block">Block</button>
+            <button type="submit" class="btn btn-sm btn-primary" asp-action="Unblock">Unblock</button>
+            <button type="submit" class="btn btn-sm btn-danger" asp-action="Delete">Delete</button>
+            <button type="submit" class="btn btn-sm btn-outline-primary" asp-action="RoleList">Role List</button>
+            
+            <table class="table table-striped table-bordered ">
+
+                <tr><th><input type="checkbox" class="all" data-id="d1" title="CheckAll"></th><th>Name</th><th>Email</th><th>Date of registration</th><th>Block</th><th>Roles</th></tr>
+
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>
+                            <input type="checkbox" value="@user.Id" name="selectedUsers" class="one" data-id="d1">
+                        </td>
+                        <td>@user.UserName</td>
+                        <td>@user.Email</td>
+                        <td>@user.createDate</td>
+                        <td>@user.isBlocked</td>
+                        <td>
+                            <a class="btn btn-sm btn-primary" asp-action="EditRole" asp-route-userid="@user.Id">Change Role</a>
+                        </td>
+
+                    </tr>
+                }
+
+            </table>
+        </div>
+
+    </form>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".all").on("change", function () {
+                var groupId = $(this).data('id');
+                $('.one[data-id="' + groupId + '"]').prop("checked", this.checked);
+            });
+
+            $(".one").on("change", function () {
+                var groupId = $(this).data('id');
+                var allChecked = $('.one[data-id="' + groupId + '"]:not(:checked)').length == 0;
+                $('.all[data-id="' + groupId + '"]').prop("checked", allChecked);
+            });
+        });
+    </script>
+}
+else
+{
+    <a asp-controller="Account" asp-action="Login">Login</a>
+    <a asp-controller="Account" asp-action="Register">Register</a>
+}

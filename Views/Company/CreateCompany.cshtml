@@ -1,0 +1,26 @@
+﻿@model CrowdFundingApp.ViewModels.CreateCompanyViewModel
+@{
+    ViewBag.Title = "Добавление компании";
+}
+    <form asp-action="Create" asp-controller="Company">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="companyName" class="control-label">Name</label>
+            <input type="text" asp-for="companyName" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="needDonate" class="control-label">Funding</label>
+            <input type="text" asp-for="needDonate" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="endDate" class="control-label">End Date</label>
+            <input type="text" asp-for="endDate" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="about" class="control-label">About</label>
+            <input type="text" asp-for="about" class="form-control" />
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Добавить" class="btn btn-outline-secondary" />
+        </div>
+    </form>
