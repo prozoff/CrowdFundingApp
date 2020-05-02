@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-//using EFDataApp.Models;
 
 namespace CrowdFundingApp.Controllers
 {
@@ -15,12 +14,14 @@ namespace CrowdFundingApp.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private RoleManager<IdentityRole> _roleManager;
+        private ApplicationContext db;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, ApplicationContext context, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
+            db = context;
         }
 
         [HttpGet]
@@ -33,8 +34,9 @@ namespace CrowdFundingApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = new User { Email = model.Email, UserName = model.Email };
+                User user = new User { Email = model.Email, UserName = model.Email, createDate = DateTime.Now.ToString() };
                 var result = await _userManager.CreateAsync(user, model.Password);
+                await _userManager.AddToRoleAsync(user, setNewRole());
 
                 if (result.Succeeded)
                 {
@@ -80,7 +82,7 @@ namespace CrowdFundingApp.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Неправильный логин и (или) пароль");
+                    ModelState.AddModelError("", "incorrect login or password");
                 }
             }
             return View(model);
@@ -94,6 +96,18 @@ namespace CrowdFundingApp.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        
+        public string setNewRole()
+        { 
+            if(db.Users.Count() == 1)
+            {
+                return "Admin";
+            }
+            else
+            {
+                return "User";
+            }
+        }
+
+
     }
 }
