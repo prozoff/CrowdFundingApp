@@ -6,21 +6,24 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using CrowdFundingApp.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CrowdFundingApp.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private ApplicationContext db;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ApplicationContext context)
         {
+            db = context;
             _logger = logger;
         }
 
         public IActionResult Index()
         {
-            return View();
+            return View(db.Company.Include(v => v.creater).ToList());
         }
 
         public IActionResult Privacy()

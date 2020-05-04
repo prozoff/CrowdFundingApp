@@ -1,5 +1,6 @@
 ﻿using CrowdFundingApp.Models;
 using CrowdFundingApp.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,8 @@ using System.Threading.Tasks;
 
 namespace CrowdFundingApp.Controllers
 {
+
+    //[Authorize(Roles = "Admin, User")]
     public class CompanyController : Controller
     {
         private ApplicationContext db;
