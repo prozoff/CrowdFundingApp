@@ -7,6 +7,9 @@
 {
     <p>@User.Identity.Name</p>
 
+    <form method="post" asp-controller="Users" asp-action="Profile">
+        <input type="submit" value="Profile" />
+    </form>
     <form method="post" asp-controller="Account" asp-action="Logout">
         <input type="submit" value="Logout" />
     </form>
