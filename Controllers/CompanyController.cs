@@ -27,6 +27,12 @@ namespace CrowdFundingApp.Controllers
         public IActionResult Index() => View(db.Company.Include(u => u.creater).ToList());
         public IActionResult CreateCompany() => View();
 
+        public IActionResult CompanyProfile(string companyId)
+        {
+
+            return View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create(CreateCompanyViewModel model)
         {

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using CrowdFundingApp.Models;
 using Microsoft.EntityFrameworkCore;
+using CrowdFundingApp.ViewModels;
 
 namespace CrowdFundingApp.Controllers
 {
@@ -23,7 +24,12 @@ namespace CrowdFundingApp.Controllers
 
         public IActionResult Index()
         {
-            return View(db.Company.Include(v => v.creater).ToList());
+            HomeViewModel model = new HomeViewModel
+            {
+                lastUpdeteCompany = db.Company.Include(v => v.creater).ToList(),
+                ratedCompany = db.Company.Include(v => v.creater).ToList()
+            };
+            return View(model);
         }
 
         public IActionResult Privacy()
