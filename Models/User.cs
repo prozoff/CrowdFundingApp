@@ -18,6 +18,7 @@ namespace CrowdFundingApp.Models
         public List<CompanyRating> CompanyRatings { get; set; }
         public List<Comments> Comments { get; set; }
         public List<LikeList> LikeLists { get; set; }
+        public List<UserDonate> userDonates { get; set; }
     }
 
 }

@@ -22,6 +22,7 @@ namespace CrowdFundingApp.Models
         public DbSet<ResourcesLinks> ResourcesLinks { get; set; }
         public DbSet<Comments> Comments { get; set; }
         public DbSet<LikeList> LikeList { get; set; }
+        public DbSet<UserDonate> UserDonates { get; set; } 
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
         {
