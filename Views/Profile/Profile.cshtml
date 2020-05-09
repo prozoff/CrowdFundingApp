@@ -5,9 +5,21 @@
 
 @if (User.Identity.IsAuthenticated)
 {
-    @if (User.IsInRole("User"))
+    @if (User.Identity.IsAuthenticated)
     {
         <p>Hello, @User.Identity.Name</p>
+
+        <form method="post" asp-controller="Account" asp-action="Logout">
+            <input type="submit" value="Logout" />
+        </form>
+
+        @if (User.IsInRole("Admin"))
+        {
+            <form method="post" asp-controller="Admin" asp-action="Index">
+                <input type="submit" value="Administrator" />
+            </form>
+        }
+
 
         <a asp-controller="Company" asp-action="CreateCompany">Create</a>
 

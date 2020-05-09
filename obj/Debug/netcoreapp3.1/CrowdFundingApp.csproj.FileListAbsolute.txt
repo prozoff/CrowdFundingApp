@@ -154,3 +154,6 @@ D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\Razor\Views\Users\
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\Razor\Views\Nwes\News.cshtml.g.cs
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\Razor\Views\Profile\Profile.cshtml.g.cs
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\Razor\Views\CompanyProfile\CompanyProfile.cshtml.g.cs
+D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Index.cshtml.g.cs
+D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\Razor\Views\Theme\CreateTheme.cshtml.g.cs
+D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\Razor\Views\Theme\Index.cshtml.g.cs

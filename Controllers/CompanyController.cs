@@ -45,7 +45,7 @@ namespace CrowdFundingApp.Controllers
                 db.Company.Add(company);
                 await db.SaveChangesAsync();
 
-                return RedirectToAction("Index");
+                return RedirectToAction("CompanyProfile", "CompanyProfile", new { company.companyId });
             }
             return View(model);
         }

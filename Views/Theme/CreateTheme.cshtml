@@ -1,0 +1,15 @@
+﻿@model CrowdFundingApp.ViewModels.ThemesViewModel
+@{
+    ViewData["Title"] = "CreateTheme";
+}
+
+<form asp-action="Create" asp-controller="Theme">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="themeName" class="control-label">Theme name</label>
+        <input type="text" asp-for="themeName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Add" class="btn btn-outline-secondary" />
+    </div>
+</form>

@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+@if (User.IsInRole("Admin"))
+{
+    <p>Hello, Administrator</p>
+
+    <form method="post" asp-controller="Home" asp-action="toUsers">
+        <input type="submit" value="Users" />
+    </form>
+    <form method="post" asp-controller="Theme" asp-action="Index">
+        <input type="submit" value="Themes" />
+    </form>
+}
