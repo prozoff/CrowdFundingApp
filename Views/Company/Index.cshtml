@@ -8,7 +8,7 @@
     @foreach (var company in Model)
     {
         <tr>
-            <td><a asp-controller="CompanyProfile" asp-action="CompanyProfile" asp-route-companyId="@company.companyId">@company.companyName</a>  </td>
+            <td><a asp-controller="CompanyProfile" asp-action="CompanyProfile" asp-route-companyId="@company.companyId">@company.companyName</a></td>
             <td>@company.creater</td>
             <td>@company.about</td>
             <td>@company.startDate</td>

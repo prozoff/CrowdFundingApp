@@ -3,10 +3,12 @@
     ViewData["Title"] = "Profile";
 }
 
+
 @if (User.Identity.IsAuthenticated)
 {
     @if (User.Identity.IsAuthenticated)
     {
+
         <p>Hello, @User.Identity.Name</p>
 
         <form method="post" asp-controller="Account" asp-action="Logout">
@@ -24,7 +26,7 @@
         <a asp-controller="Company" asp-action="CreateCompany">Create</a>
 
         <table class="table">
-            <tr><th>Name</th><th>Creater</th><th>About</th><th>Begin</th><th>End</th><th>Need</th><th>Found</th></tr>
+            <tr><th>Name</th><th>Creater</th><th>About</th><th>Begin</th><th>End</th><th>Need</th><th>Found</th><th></th></tr>
             @foreach (var company in Model)
             {
                 <tr>
@@ -35,6 +37,7 @@
                     <td>@company.endDate</td>
                     <td>@company.needDonate</td>
                     <td>@company.totaldonate</td>
+                    <td><a asp-controller="Company" asp-action="editCompany">Edit</a></td>
 
                 </tr>
             }

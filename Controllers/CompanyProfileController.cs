@@ -1,6 +1,7 @@
 ﻿using CrowdFundingApp.Models;
 using CrowdFundingApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +32,21 @@ namespace CrowdFundingApp.Controllers
             };
 
             return View(model);
+        }
+
+        public IActionResult EditCompany(int companyId)
+        {
+            Company company = db.Company.Find(companyId);
+
+            CompanyProfileViewModel model = new CompanyProfileViewModel
+            {
+                companyId = company.companyId,
+                companyName = company.companyName,
+                
+
+            }
+
+            return View();
         }
     }
 }

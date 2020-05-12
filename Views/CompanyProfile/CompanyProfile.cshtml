@@ -3,6 +3,8 @@
     ViewData["Title"] = "Company Profile";
 }
 
+<a asp-controller="CompanyProfile" asp-action="EditCompany" asp-route-companyId="@Model.companyId">Edit Company</a>
+
 <p>@Model.companyName</p>
 <p>@Model.rating</p>
 <p>@Model.needSum</p>
