@@ -20,15 +20,9 @@ namespace CrowdFundingApp.Controllers
 
         public IActionResult CompanyProfile(int companyId)
         {
-            Company comapny = db.Company.Find(companyId);
             CompanyProfileViewModel model = new CompanyProfileViewModel
             {
-                comapnyId = comapny.companyId,
-                companyName = comapny.companyName,
-                totalSum = comapny.totaldonate,
-                needSum = comapny.needDonate,
-                rating = comapny.rating
-
+                companyProfile = db.Company.Where(c => c.companyId == companyId).ToList()
             };
 
             return View(model);
@@ -37,14 +31,11 @@ namespace CrowdFundingApp.Controllers
         public IActionResult EditCompany(int companyId)
         {
             Company company = db.Company.Find(companyId);
-
             CompanyProfileViewModel model = new CompanyProfileViewModel
             {
-                companyId = company.companyId,
-                companyName = company.companyName,
                 
 
-            }
+            };
 
             return View();
         }

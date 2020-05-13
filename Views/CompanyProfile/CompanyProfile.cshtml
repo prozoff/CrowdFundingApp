@@ -1,11 +1,14 @@
-﻿@model CrowdFundingApp.ViewModels.CompanyProfileViewModel
+﻿
 @{
     ViewData["Title"] = "Company Profile";
 }
 
 <a asp-controller="CompanyProfile" asp-action="EditCompany" asp-route-companyId="@Model.companyId">Edit Company</a>
 
-<p>@Model.companyName</p>
-<p>@Model.rating</p>
-<p>@Model.needSum</p>
-<p>@Model.totalSum</p>
+@foreach (Company company in Model.companyProfile)   //todo without cicle
+{
+    <p>Name: @company.companyName</p>
+    <p>rating: @company.CompanyRatings</p>
+    <p>money need: @company.needDonate</p>
+    <p>total donate: @company.totaldonate</p>
+}
