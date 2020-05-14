@@ -1,6 +1,24 @@
-﻿
+﻿@model CrowdFundingApp.ViewModels.CompanyProfileViewModel
 @{
     ViewData["Title"] = "EditCompany";
 }
 
 
+<form method="post" asp-controller="CompanyProfile" asp-action="Save">
+    @foreach(Company company in Model.companyProfile)
+    {
+        <div hidden="true">
+            <label asp-for="companyId"></label><br />
+            <input value="@company.companyId" asp-for="companyId" />
+        </div>
+        <div>
+            <label asp-for="companyName"></label><br />
+            <input value="@company.companyName" asp-for="companyName" />
+        </div>
+        <div>
+            <input type="submit" value="Save" />
+        </div>
+
+    }
+    
+</form>

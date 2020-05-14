@@ -30,14 +30,20 @@ namespace CrowdFundingApp.Controllers
 
         public IActionResult EditCompany(int companyId)
         {
-            Company company = db.Company.Find(companyId);
             CompanyProfileViewModel model = new CompanyProfileViewModel
             {
-                
-
+                companyProfile = db.Company.Where(c => c.companyId == companyId).ToList()
             };
 
-            return View();
+            return View(model);
+        }
+
+        public async Task<IActionResult> Save(CompanyProfileViewModel model, int companyId)
+        {
+            Company company = db.Company.Where(c => c.companyId == companyId).FirstOrDefault();
+            company.companyName = model.companyName;
+            db.SaveChanges();
+            return RedirectToAction("CompanyProfile", "CompanyProfile", new { company.companyId });
         }
     }
 }

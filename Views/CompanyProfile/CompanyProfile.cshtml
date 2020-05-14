@@ -3,10 +3,11 @@
     ViewData["Title"] = "Company Profile";
 }
 
-<a asp-controller="CompanyProfile" asp-action="EditCompany" asp-route-companyId="@Model.companyId">Edit Company</a>
 
-@foreach (Company company in Model.companyProfile)   //todo without cicle
+
+@foreach (Company company in Model.companyProfile)
 {
+    <a asp-controller="CompanyProfile" asp-action="EditCompany" asp-route-companyId="@company.companyId">Edit Company</a>
     <p>Name: @company.companyName</p>
     <p>rating: @company.CompanyRatings</p>
     <p>money need: @company.needDonate</p>
