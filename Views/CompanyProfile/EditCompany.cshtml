@@ -5,20 +5,41 @@
 
 
 <form method="post" asp-controller="CompanyProfile" asp-action="Save">
-    @foreach(Company company in Model.companyProfile)
-    {
-        <div hidden="true">
-            <label asp-for="companyId"></label><br />
-            <input value="@company.companyId" asp-for="companyId" />
-        </div>
-        <div>
-            <label asp-for="companyName"></label><br />
-            <input value="@company.companyName" asp-for="companyName" />
-        </div>
-        <div>
-            <input type="submit" value="Save" />
-        </div>
+   
+    <div hidden="true">
+        <input value="@Model.companyProfile.companyId" asp-for="companyId" />
+    </div>
+    <div>
+        <label asp-for="companyName"></label><br />
+        <input value="@Model.companyProfile.companyName" asp-for="companyName" />
+    </div>
+    <div>
+        <label asp-for="about"></label><br />
+        <input value="@Model.companyProfile.about" asp-for="about" />
+    </div>
+    <div>
+        <input type="submit" value="Save" />
+    </div>
 
-    }
-    
+    <div>
+        <button asp-controller="CompanyProfile" asp-action="addBonus" asp-route-companyId="@Model.companyProfile.companyId">add Bonus</button>
+
+        <table class="table">
+            <tr><th>Bonus</th><th>Cost</th><th></th></tr>
+            @foreach (BonusList bonusList in Model.bonusList)
+            {
+                <tr>
+                    <td>@bonusList.bonusName</td>
+                    <td>@bonusList.bonusCost</td>
+                </tr>
+            }
+        </table>
+    </div>
+
 </form>
+
+
+
+
+
+

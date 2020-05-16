@@ -1,0 +1,21 @@
+﻿@model CrowdFundingApp.ViewModels.CompanyProfileViewModel
+@{
+    ViewData["Title"] = "AddBonus";
+}
+
+<form asp-action="saveBonus" asp-controller="CompanyProfile" asp-route-companyId="@Model.companyProfile.companyId">
+    <div hidden="true">
+        <input asp-for="companyId" value="@Model.companyProfile.companyId" />
+    </div>
+    <div class="form-group">
+        <label asp-for="bonus">Bonus name</label>
+        <input type="text" asp-for="bonus" />
+    </div>
+    <div>
+        <label asp-for="bonusCost">Bonus Cost</label>
+        <input asp-for="bonusCost" />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Add" />
+    </div>
+</form>
