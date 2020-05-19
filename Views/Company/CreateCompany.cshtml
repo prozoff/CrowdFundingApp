@@ -21,6 +21,15 @@
             <input type="text" asp-for="about" class="form-control" />
         </div>
 
+        <div>
+            <select asp-for="theme">
+                <option disabled>Choise theme</option>
+                @foreach(ThemeList themeList in Model.themeList)
+                {
+                    <option value="@themeList.themeId">@themeList.themeName</option>
+                }
+            </select>
+        </div>
         
 
         <div class="form-group">

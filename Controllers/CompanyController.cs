@@ -25,7 +25,14 @@ namespace CrowdFundingApp.Controllers
         }
 
         public IActionResult Index() => View(db.Company.Include(u => u.creater).ToList());
-        public IActionResult CreateCompany() => View();
+        public IActionResult CreateCompany()
+        {
+            CreateCompanyViewModel model = new CreateCompanyViewModel
+            {
+                themeList = db.ThemeLists.ToList()
+            };
+            return View(model);
+        }
 
         public IActionResult CompanyProfile(string companyId)
         {
@@ -42,7 +49,10 @@ namespace CrowdFundingApp.Controllers
                 string currentUser = User.Identity.Name;
                 User user = await _userManager.FindByNameAsync(currentUser);
                 Company company = new Company { companyName = model.companyName, creater = user, totaldonate = 0, needDonate = model.needDonate, startDate = DateTime.Now.ToString(), endDate = model.endDate, about = model.about};
+                ThemeList theme = db.ThemeLists.Where(t => t.themeId == model.theme).FirstOrDefault();
+                CompanyTheme companyTheme = new CompanyTheme { company = company, theme = theme };
                 db.Company.Add(company);
+                db.CompanyTheme.Add(companyTheme);
                 await db.SaveChangesAsync();
 
                 return RedirectToAction("CompanyProfile", "CompanyProfile", new { company.companyId });
