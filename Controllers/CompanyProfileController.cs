@@ -25,7 +25,7 @@ namespace CrowdFundingApp.Controllers
             CompanyProfileViewModel model = new CompanyProfileViewModel
             {
                 companyProfile = company,
-                theme = companyTheme
+                themeName = companyTheme
             };
 
             return View(model);
@@ -68,6 +68,14 @@ namespace CrowdFundingApp.Controllers
                 companyProfile = company
             };
             return View(model);
+        }
+
+        public IActionResult deleteCompany(int companyId)
+        {
+            Company company = db.Company.Where(c => c.companyId == companyId).FirstOrDefault();
+            db.Company.Remove(company);
+            db.SaveChanges();
+            return RedirectToAction("index", "Home");
         }
     }
 }
