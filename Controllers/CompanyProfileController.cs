@@ -20,7 +20,7 @@ namespace CrowdFundingApp.Controllers
 
         public IActionResult CompanyProfile(int companyId)
         {
-            Company company = db.Company.Where(c => c.companyId == companyId).FirstOrDefault();
+            Company company = db.Company.Include(b => b.BonusList).Where(c => c.companyId == companyId).FirstOrDefault();
             CompanyTheme companyTheme = db.CompanyTheme.Include(t => t.theme).Where(t => t.company == company).FirstOrDefault();
             CompanyProfileViewModel model = new CompanyProfileViewModel
             {
@@ -37,7 +37,7 @@ namespace CrowdFundingApp.Controllers
             CompanyProfileViewModel model = new CompanyProfileViewModel
             {
                 companyProfile = db.Company.Where(c => c.companyId == companyId).FirstOrDefault(),
-                bonusList = db.BonusList.Include(v => v.company).Where(c => c.company == company).ToList() //it worked without Include()???
+                bonusList = db.BonusList.Include(v => v.company).Where(c => c.company == company).ToList()
             };
 
             return View(model);
@@ -72,7 +72,7 @@ namespace CrowdFundingApp.Controllers
 
         public IActionResult deleteCompany(int companyId)
         {
-            Company company = db.Company.Where(c => c.companyId == companyId).FirstOrDefault();
+            Company company = db.Company.Include(t => t.CompanyTheme).Include(b => b.BonusList).Where(c => c.companyId == companyId).FirstOrDefault(); //bad idea but it worked (check caskade delete)
             db.Company.Remove(company);
             db.SaveChanges();
             return RedirectToAction("index", "Home");

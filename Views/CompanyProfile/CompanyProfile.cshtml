@@ -10,4 +10,15 @@
 <p>money need: @Model.companyProfile.needDonate</p>
 <p>total donate: @Model.companyProfile.totaldonate</p>
 <p>total About: @Model.companyProfile.about</p>
-
+<div>
+    <table class="table">
+        <tr><th>Bonus</th><th>Cost</th><th></th></tr>
+        @foreach (BonusList bonusList in Model.companyProfile.BonusList)
+        {
+            <tr>
+                <td>@bonusList.bonusName</td>
+                <td>@bonusList.bonusCost</td>
+            </tr>
+        }
+    </table>
+</div>
