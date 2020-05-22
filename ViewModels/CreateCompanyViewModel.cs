@@ -15,6 +15,7 @@ namespace CrowdFundingApp.ViewModels
         public string endDate { get; set; }
         public string about { get; set; }
         public int theme { get; set; }
+        public Company company { get; set; }
         public IList<string> tags { get; set; }
         public List<ThemeList> themeList { get; set; }
         

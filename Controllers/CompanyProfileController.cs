@@ -72,7 +72,7 @@ namespace CrowdFundingApp.Controllers
 
         public IActionResult deleteCompany(int companyId)
         {
-            Company company = db.Company.Include(t => t.CompanyTheme).Include(b => b.BonusList).Where(c => c.companyId == companyId).FirstOrDefault(); //bad idea but it worked (check caskade delete)
+            Company company = db.Company.Include(t => t.CompanyTheme).Include(t => t.CompanyTag).Include(b => b.BonusList).Where(c => c.companyId == companyId).FirstOrDefault(); //bad idea but it worked (check caskade delete)
             db.Company.Remove(company);
             db.SaveChanges();
             return RedirectToAction("index", "Home");

@@ -2,8 +2,7 @@
 @{
     ViewBag.Title = "Create new company";
 }
-    @using (Html.BeginForm())
-    {
+    <form asp-action="Create" asp-controller="Company">
         <div asp-validation-summary="All" class="text-danger"></div>
         <div class="form-group">
             <label asp-for="companyName" class="control-label">Name</label>
@@ -37,34 +36,35 @@
                 <label id="last">Tags: </label>
             </div>
 
-            <label class="control-label">Write Tags</label>
-            <input id="inputLine" type="text" class="form-control" />
+            <label>Write Tags</label>
+            <input id="inputLine" type="text" />
 
         </div>
-        <button id="addTag" class="addLink">Add tag</button>
+        <div id="addTag" class="btn btn-outline-secondary" onclick="addTag()">Add tag</div>
 
         <div class="form-group">
             <input type="submit" value="Add" class="btn btn-outline-secondary" />
         </div>
-    }
+    </form>
 
 @section Scripts {
     <script>
-        $(function () {
-            let i = 0;
-            let lastItem = $('last');
-            $('addTag').click(function () {
-                let newTag = document.createElement("div");
-                let getTag = $('inputLine').value;
-                newTag.id = "tagId_" + i;
-                newTag.setAttribute('class', 'tag');
-                newTag.setAttribute('asp-for', 'tags[i]');
-                newTag.setAttribute('value', getTag);
-                newTag.innerHTML = getTag;
-                lastItem.append(newTag);
-                lastItem = newTag
-                i++
-            })
-        })
+        let i = 0;
+        let lastItem = document.getElementById('last');
+        function addTag() {
+            let newDivTag = document.createElement("div");
+            let tag = document.createElement("input");
+            let getTagValue = document.getElementById('inputLine').value;
+            newDivTag.id = "tagId_" + i;
+            newDivTag.setAttribute('class', 'tag');
+            tag.setAttribute('name', 'tags[' + i + ']');
+            tag.setAttribute('value', getTagValue);
+            tag.setAttribute('hidden', 'true');
+            newDivTag.innerHTML = getTagValue;
+            newDivTag.append(tag);
+            lastItem.append(newDivTag);
+            i++
+        }
+
     </script>
 }
