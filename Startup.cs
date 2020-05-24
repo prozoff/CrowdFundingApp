@@ -38,6 +38,7 @@ namespace CrowdFundingApp
                 .AddEntityFrameworkStores<ApplicationContext>();
 
             services.AddControllersWithViews();
+            services.AddSignalR();
         }
 
         public void Configure(IApplicationBuilder app)
@@ -57,6 +58,7 @@ namespace CrowdFundingApp
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                //endpoints.MapHub<CommentHub>();
             });
         }
     }

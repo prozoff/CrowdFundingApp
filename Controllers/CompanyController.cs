@@ -53,7 +53,7 @@ namespace CrowdFundingApp.Controllers
                 addTags(model, company);
                 db.Company.Add(company);
                 db.CompanyTheme.Add(companyTheme);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
 
                 return RedirectToAction("CompanyProfile", "CompanyProfile", new { company.companyId });
             }
@@ -64,26 +64,35 @@ namespace CrowdFundingApp.Controllers
         {
             foreach(string tags in model.tags)
             {
+                TagList tag;
                 if (db.TagLists.FirstOrDefault(t => t.tagName == tags) == null)
                 {
-                    TagList tag = new TagList { tagName = tags };
-                    db.TagLists.Add(tag);
+                    tag = createNewTag(tags);
                 }
+                else
+                {
+                    tag = findTag(tags);
+                }
+                addCompanyTag(tag, company);
             }
-            addCompanyTag(model, company);
-            db.SaveChanges();
         }
 
-        private void addCompanyTag(CreateCompanyViewModel model, Company company)
+        private void addCompanyTag(TagList tag, Company company)
         {
-            CompanyTag companyTag;
-            TagList tag;
-            foreach(string tags in model.tags)
-            {
-                tag = db.TagLists.FirstOrDefault(t => t.tagName == tags);
-                companyTag = new CompanyTag { company = company, tag = tag };
-                db.CompanyTags.Add(companyTag);
-            }
+            CompanyTag companyTag = new CompanyTag { company = company, tag = tag };
+            db.CompanyTags.Add(companyTag);
+        }
+
+        private TagList createNewTag(string tag)
+        {
+            TagList newTag = new TagList { tagName = tag };
+            db.TagLists.Add(newTag);
+            return newTag;
+        }
+
+        private TagList findTag(string tag)
+        {
+            return db.TagLists.FirstOrDefault(t => t.tagName == tag);
         }
     }
 }

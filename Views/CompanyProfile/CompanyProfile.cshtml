@@ -6,7 +6,7 @@
 <a asp-controller="CompanyProfile" asp-action="EditCompany" asp-route-companyId="@Model.companyProfile.companyId">Edit Company</a>
 <a asp-controller="News" asp-action="createNews" asp-route-companyId="@Model.companyProfile.companyId">Create News</a>
 <p>Name: @Model.companyProfile.companyName</p>
-<p>Theme: 
+<p>Theme: @Model.themeName.theme.themeName</p>
 <p>rating: @Model.companyProfile.CompanyRatings</p>
 <p>money need: @Model.companyProfile.needDonate</p>
 <p>total donate: @Model.companyProfile.totaldonate</p>

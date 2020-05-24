@@ -155,7 +155,8 @@ D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\Razor\Views\Compan
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Index.cshtml.g.cs
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\Razor\Views\Theme\CreateTheme.cshtml.g.cs
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\Razor\Views\Theme\Index.cshtml.g.cs
-D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\CrowdFundingApp.csproj.CoreCompileInputs.cache
-D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\CrowdFundingApp.MvcApplicationPartsAssemblyInfo.cache
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\Razor\Views\CompanyProfile\EditCompany.cshtml.g.cs
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\Razor\Views\CompanyProfile\AddBonus.cshtml.g.cs
+D:\Dev\Proj\Itra\Curs\CrowdFundingApp\bin\Debug\netcoreapp3.1\libman.json
+D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\CrowdFundingApp.csproj.CoreCompileInputs.cache
+D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\CrowdFundingApp.MvcApplicationPartsAssemblyInfo.cache

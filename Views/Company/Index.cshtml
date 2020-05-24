@@ -15,7 +15,29 @@
             <td>@company.endDate</td>
             <td>@company.needDonate</td>
             <td>@company.totaldonate</td>
-            
+
         </tr>
     }
 </table>
+
+
+
+<div>
+    <input type="text" id="text" />
+    <div id="addTag" class="btn btn-outline-secondary" onclick="send()">Send</div>
+</div>
+<div id="comment"></div>
+
+<script src="js/signalr/dist/browser/signalr.min.js"></script>
+<script>
+
+    const hubConnection = new signalR.HubConnectionBuilder()
+        .withUrl("/Company")
+        .build();
+
+    function send() {
+        let message = document.getElementById("text").value;
+        hubConnection.invoke("Send", message);
+    }
+
+</script>
