@@ -1,4 +1,4 @@
-﻿
+﻿@model CrowdFundingApp.ViewModels.ProfileViewModel
 @{
     ViewData["Title"] = "Profile";
 }
@@ -8,26 +8,60 @@
 {
     @if (User.Identity.IsAuthenticated)
     {
+        <div class="row">
+            <div class="col-sm-10"><h3>Hello, @User.Identity.Name</h3></div>
+        </div>
+        <div class="row">
+            <div class="col-2">
+                <div>
+                    <img id="profileImg" src="@Model.user.profileImg" class="rounded" alt="avatar" width="160" height="160">
+                </div>
+                <div>
+                    <button id="upload_widget" class="btn btn-primary btn-sm btn-block">Change avatar</button>
+                    <form asp-action="changeAvatar" asp-controller="Profile" asp-route-userId="@Model.user.Id">
+                        <input hidden asp-for="@Model.user.profileImg" id="saveAvatar" value="" />
+                        <input id="btnSave" type="submit" class="btn btn-secondary btn-sm btn-block" disabled value="Save"/>
+                    </form>
+                </div>
+            </div>
+            <div class="col-1"></div>
+            <div class="col-6">
+                <table class="table table-bordered table-sm">
+                    <tbody>
+                        <tr>
+                            <td class="col-1"><label>Login</label></td>
+                            <td class="col-5">
+                                <a href="#" id="login">@User.Identity.Name</a>
+                                <form id="formLogin" hidden asp-action="editLogin" asp-controller="Profile" asp-route-userId="@Model.user.Id">
+                                    <div class="form-row">
+                                        <div class="col-auto">
+                                            <input type="text" class="form-control-sm mb-2" asp-for="@Model.user.UserName" value="@Model.user.UserName">
+                                        </div>
+                                        <div class="col-auto">
+                                            <button type="submit" class="btn-primary">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
 
-        <p>Hello, @User.Identity.Name</p>
+        <br>
+
 
         <form method="post" asp-controller="Account" asp-action="Logout">
             <input type="submit" value="Logout" />
         </form>
 
-        @if (User.IsInRole("Admin"))
-        {
-            <form method="post" asp-controller="Admin" asp-action="Index">
-                <input type="submit" value="Administrator" />
-            </form>
-        }
-
-
         <a asp-controller="Company" asp-action="CreateCompany">Create</a>
 
         <table class="table">
             <tr><th>Name</th><th>Creater</th><th>About</th><th>Begin</th><th>End</th><th>Need</th><th>Found</th><th></th></tr>
-            @foreach (var company in Model)
+            @foreach (var company in Model.companies)
             {
                 <tr>
                     <td>@company.companyName</td>
@@ -43,8 +77,34 @@
             }
         </table>
     }
-    else
-    {
-
-    }
 }
+
+<script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
+<script type="text/javascript">
+    let newAvatar;
+    let currentAvatar = document.getElementById('profileImg');
+    var myWidget = cloudinary.createUploadWidget({
+        cloudName: 'prozoff',
+        uploadPreset: 'ml_default'
+    }, (error, result) => {
+        if (!error && result && result.event === "success") {
+            console.log('Done! Here is the image info: ', result.info);
+            newAvatar = result.info.secure_url;
+            currentAvatar.setAttribute('src', newAvatar);
+            document.getElementById('saveAvatar').setAttribute('value', newAvatar);
+            document.getElementById('btnSave').removeAttribute('disabled');
+            document.getElementById('btnSave').setAttribute('class', 'btn btn-primary btn-sm btn-block');
+        }
+    });
+    document.getElementById("upload_widget").addEventListener("click", function () {
+        myWidget.open();
+    }, false);
+</script>
+<script>
+    let logingString = document.getElementById("login");
+    let formLogin = document.getElementById('formLogin');
+    logingString.addEventListener('click', function (e) {
+        logingString.setAttribute('hidden', 'true');
+        formLogin.removeAttribute('hidden');
+    });
+</script>

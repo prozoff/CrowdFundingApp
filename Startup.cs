@@ -53,6 +53,7 @@ namespace CrowdFundingApp
             app.UseAuthentication();
             app.UseAuthorization();
 
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -61,5 +62,6 @@ namespace CrowdFundingApp
                 //endpoints.MapHub<CommentHub>();
             });
         }
+
     }
 }

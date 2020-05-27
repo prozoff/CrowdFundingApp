@@ -1,7 +1,12 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Crownd Findin App</h1>
+        <p class="lead">By Prozoff</p>
+    </div>
+</div>
 
 @if (User.Identity.IsAuthenticated)
 {
@@ -54,3 +59,26 @@ else
     }
 </table>
 
+<button id="upload_widget" class="btn-primary">Upload files</button>
+
+
+
+<script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    let im;
+    var myWidget = cloudinary.createUploadWidget({
+        cloudName: 'prozoff',
+        uploadPreset: 'ml_default'
+    }, (error, result) => {
+        if (!error && result && result.event === "success") {
+            console.log('Done! Here is the image info: ', result.info);
+            im = result.info.secure_url;
+        }
+    }
+    )
+
+    document.getElementById("upload_widget").addEventListener("click", function () {
+        myWidget.open();
+    }, false);
+</script>

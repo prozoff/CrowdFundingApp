@@ -20,7 +20,7 @@ namespace CrowdFundingApp.Controllers
 
         public IActionResult CompanyProfile(int companyId)
         {
-            Company company = db.Company.Include(b => b.BonusList).Where(c => c.companyId == companyId).FirstOrDefault();
+            Company company = db.Company.Include(b => b.BonusList).Include(n => n.News).Where(c => c.companyId == companyId).FirstOrDefault();
             CompanyTheme companyTheme = db.CompanyTheme.Include(t => t.theme).Where(t => t.company == company).FirstOrDefault();
             CompanyProfileViewModel model = new CompanyProfileViewModel
             {

@@ -23,3 +23,17 @@
         }
     </table>
 </div>
+<div>
+    <table class="table">
+        <tr><th>img</th><th>Headler</th><th>News</th><th>Date</th></tr>
+        @foreach (News news in Model.companyProfile.News)
+        {
+            <tr>
+                <td></td>
+                <td>@news.newsName</td>
+                <td>@news.newsText</td>
+                <td>@news.newsDate</td>
+            </tr>
+        }
+    </table>
+</div>

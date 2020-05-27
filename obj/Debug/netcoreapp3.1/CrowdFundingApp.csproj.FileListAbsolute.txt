@@ -149,7 +149,6 @@ D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\Razor\Views\Compan
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\Razor\Views\Company\Index.cshtml.g.cs
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\Razor\Views\Users\EditRole.cshtml.g.cs
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\Razor\Views\Users\RoleList.cshtml.g.cs
-D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\Razor\Views\Nwes\News.cshtml.g.cs
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\Razor\Views\Profile\Profile.cshtml.g.cs
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\Razor\Views\CompanyProfile\CompanyProfile.cshtml.g.cs
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Index.cshtml.g.cs
@@ -158,5 +157,17 @@ D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\Razor\Views\Theme\
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\Razor\Views\CompanyProfile\EditCompany.cshtml.g.cs
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\Razor\Views\CompanyProfile\AddBonus.cshtml.g.cs
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\bin\Debug\netcoreapp3.1\libman.json
+D:\Dev\Proj\Itra\Curs\CrowdFundingApp\bin\Debug\netcoreapp3.1\ServiceStack.dll
+D:\Dev\Proj\Itra\Curs\CrowdFundingApp\bin\Debug\netcoreapp3.1\ServiceStack.Client.dll
+D:\Dev\Proj\Itra\Curs\CrowdFundingApp\bin\Debug\netcoreapp3.1\ServiceStack.Common.dll
+D:\Dev\Proj\Itra\Curs\CrowdFundingApp\bin\Debug\netcoreapp3.1\ServiceStack.Interfaces.dll
+D:\Dev\Proj\Itra\Curs\CrowdFundingApp\bin\Debug\netcoreapp3.1\ServiceStack.Text.dll
+D:\Dev\Proj\Itra\Curs\CrowdFundingApp\bin\Debug\netcoreapp3.1\System.ServiceModel.Primitives.dll
+D:\Dev\Proj\Itra\Curs\CrowdFundingApp\bin\Debug\netcoreapp3.1\System.ServiceModel.dll
+D:\Dev\Proj\Itra\Curs\CrowdFundingApp\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netstandard2.0\System.Private.ServiceModel.dll
+D:\Dev\Proj\Itra\Curs\CrowdFundingApp\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Private.ServiceModel.dll
+D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\Razor\Views\CompanyProfile\Comments.cshtml.g.cs
+D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\Razor\Views\News\createNews.cshtml.g.cs
+D:\Dev\Proj\Itra\Curs\CrowdFundingApp\bin\Debug\netcoreapp3.1\package-lock.json
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\CrowdFundingApp.csproj.CoreCompileInputs.cache
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\CrowdFundingApp.MvcApplicationPartsAssemblyInfo.cache

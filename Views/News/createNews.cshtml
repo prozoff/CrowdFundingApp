@@ -1,0 +1,22 @@
+﻿@model CrowdFundingApp.ViewModels.NewsViewModel
+@{
+    ViewData["Title"] = "News";
+}
+
+    <form asp-action="Create" asp-controller="News" asp-route-companyId="@Model.company">
+
+        <div class="form-group">
+            <label asp-for="@Model.news.newsName" class="control-label">Headler</label><br />
+            <input type="text" asp-for="@Model.news.newsName" />
+        </div>
+
+        <div>
+            <label asp-for="@Model.news.newsText" class="control-label">News</label><br />
+            <textarea asp-for="@Model.news.newsText"></textarea>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Add" class="btn btn-outline-secondary" />
+        </div>
+    </form>
+

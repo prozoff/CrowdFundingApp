@@ -19,6 +19,7 @@ namespace CrowdFundingApp.Models
         public double rating { get; set; }
         public string about { get; set; }
         public string lastUpdete { get; set; }
+        public string companyImg { get; set; }
 
         public List<BonusList> BonusList { get; set; }
         public List<News> News { get; set; }

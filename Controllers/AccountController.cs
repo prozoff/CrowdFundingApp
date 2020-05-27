@@ -13,14 +13,12 @@ namespace CrowdFundingApp.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        private RoleManager<IdentityRole> _roleManager;
         private ApplicationContext db;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, ApplicationContext context, RoleManager<IdentityRole> roleManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, ApplicationContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _roleManager = roleManager;
             db = context;
         }
 
@@ -34,7 +32,7 @@ namespace CrowdFundingApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = new User { Email = model.Email, UserName = model.Email, createDate = DateTime.Now.ToString() };
+                User user = new User { Email = model.Email, UserName = model.Email, createDate = DateTime.Now.ToString(), profileImg = "https://res.cloudinary.com/prozoff/image/upload/v1590604182/avatar_2x_sf3k0v.png" };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 await _userManager.AddToRoleAsync(user, setNewRole());
 
