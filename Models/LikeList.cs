@@ -12,5 +12,6 @@ namespace CrowdFundingApp.Models
         public int likeId { get; set; }
         public User user { get; set; }
         public Comments coment { get; set; }
+        public string valueLike { get; set; }
     }
 }

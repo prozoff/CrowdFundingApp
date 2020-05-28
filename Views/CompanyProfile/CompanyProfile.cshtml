@@ -5,12 +5,14 @@
 
 <a asp-controller="CompanyProfile" asp-action="EditCompany" asp-route-companyId="@Model.companyProfile.companyId">Edit Company</a>
 <a asp-controller="News" asp-action="createNews" asp-route-companyId="@Model.companyProfile.companyId">Create News</a>
+
 <p>Name: @Model.companyProfile.companyName</p>
 <p>Theme: @Model.themeName.theme.themeName</p>
 <p>rating: @Model.companyProfile.CompanyRatings</p>
 <p>money need: @Model.companyProfile.needDonate</p>
 <p>total donate: @Model.companyProfile.totaldonate</p>
 <p>total About: @Model.companyProfile.about</p>
+
 <div>
     <table class="table">
         <tr><th>Bonus</th><th>Cost</th><th></th></tr>
@@ -37,3 +39,55 @@
         }
     </table>
 </div>
+<hr />
+<div id="comments" class="shadow-sm p-3 mb-5 bg-white rounded">
+    <p>Comments :</p>
+    @if (Model.comments.Count == 0)
+    {
+        <p>No comments</p>
+    }
+    else
+    {
+        @foreach (Comments comment in Model.comments)
+        {
+            <div class="media">
+                <img id="profileImg" src="@comment.user.profileImg" class="p-1 align-self-start sm-3 rounded-circle" alt="avatar" height="64" width="64">
+                <div class="media-body">
+                    <h5 class="mt-0">@comment.user.UserName</h5>
+                    <p>@comment.comentText</p>
+                    <div class="text-right">
+                        <button id="btnLike_@comment.ComentId" class="btn btn-outline-primary btn-sm" onclick="submitForm('like', @comment.ComentId)">+</button>
+                        <span>@comment.like</span>
+                        <button id="btnDisike_@comment.ComentId" class="btn btn-outline-primary btn-sm" onclick="submitForm('dislike', @comment.ComentId)">-</button>
+                    </div>
+                    <hr />
+                </div>
+            </div>
+        }
+        <div hidden>
+            <form asp-action="like" asp-controller="CompanyProfile" asp-route-companyId="@Model.companyProfile.companyId">
+                <input id="valueLike" asp-for="like" value="" />
+                <input id="valueCommentId" asp-for="commentId" value="" />
+                <input id="submitLike" type="submit" />
+            </form>
+        </div>
+    }
+    <form asp-action="addComment" asp-controller="CompanyProfile" asp-route-companyId="@Model.companyProfile.companyId">
+        <div class="media">
+            <img id="profileImg" src="@Model.currentUser.profileImg" class="p-1 align-self-start sm-3 rounded-circle" alt="avatar" height="64" width="64">
+            <div class="media-body">
+                <h5 class="mt-0">@Model.currentUser.UserName</h5>
+                <textarea class="mt=0 form-control" aria-label="With textarea" asp-for="@Model.comment.comentText"></textarea>
+                <input type="submit" class="btn btn-primary" value="Comment" />
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    function submitForm(likeValue, commentId) {
+        document.getElementById('valueLike').setAttribute('value', likeValue);
+        document.getElementById('valueCommentId').setAttribute('value', commentId);
+        document.getElementById('submitLike').click();
+    };
+</script>
