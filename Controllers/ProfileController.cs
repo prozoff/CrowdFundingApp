@@ -24,12 +24,13 @@ namespace CrowdFundingApp.Controllers
         }
 
 
-        public async Task<ActionResult> ProfileAsync()
+        public async Task<ActionResult> ProfileAsync(string name, string about, string beginDate, string endDate, double totalDonate, double needDonate, SortState sortOrder = SortState.NameAsc)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
+
             ProfileViewModel model = new ProfileViewModel
             {
-                companies = db.Company.Include(u => u.creater).Where(u => u.creater == user).ToList(),
+                companies = filterCompany(user, name, about, beginDate, endDate, totalDonate, needDonate, sortOrder),
                 user = user,
             };
             return View(model);
@@ -56,6 +57,58 @@ namespace CrowdFundingApp.Controllers
         {
             await _signInManager.SignOutAsync();
             await _signInManager.SignInAsync(user, false);
+        }
+
+        private List<Company> filterCompany(User user, string name, string about, string beginDate, string endDate, double totalDonate, double needDonate, SortState sortOrder)
+        {
+            IQueryable<Company> company = db.Company.Include(u => u.creater).Where(u => u.creater == user);
+
+            if (!String.IsNullOrEmpty(name))
+            {
+                company = company.Where(p => p.companyName.Contains(name));
+            }
+            if (!String.IsNullOrEmpty(about))
+            {
+                company = company.Where(p => p.about.Contains(about));
+            }
+            if (!String.IsNullOrEmpty(beginDate))
+            {
+                company = company.Where(p => p.about.Contains(beginDate));
+            }
+            if (!String.IsNullOrEmpty(endDate))
+            {
+                company = company.Where(p => p.about.Contains(endDate));
+            }
+            if(totalDonate != 0)
+            {
+                company = company.Where(p => p.totaldonate == totalDonate);
+            }
+            if(needDonate != 0)
+            {
+                company = company.Where(p => p.needDonate == needDonate);
+            }
+
+            ViewData["NameSort"] = sortOrder == SortState.NameAsc ? SortState.NameDesc : SortState.NameAsc;
+            ViewData["NeedDonateSort"] = sortOrder == SortState.NeedAsc ? SortState.NeedDesc : SortState.NeedAsc;
+            ViewData["TotalDonateSort"] = sortOrder == SortState.TotalAsc ? SortState.TotalDesc : SortState.TotalAsc;
+            ViewData["DateBeginSort"] = sortOrder == SortState.DateCreateAsc ? SortState.DateCreateDesc : SortState.DateCreateAsc;
+            ViewData["DateEndSort"] = sortOrder == SortState.DateEndAsc ? SortState.DateEndDesc : SortState.DateEndAsc;
+
+            company = sortOrder switch
+            {
+                SortState.NameDesc => company.OrderByDescending(s => s.companyName),
+                SortState.NeedAsc => company.OrderBy(s => s.needDonate),
+                SortState.NeedDesc => company.OrderByDescending(s => s.needDonate),
+                SortState.TotalAsc => company.OrderBy(s => s.totaldonate),
+                SortState.TotalDesc => company.OrderByDescending(s => s.totaldonate),
+                SortState.DateCreateAsc => company.OrderBy(s => s.startDate),
+                SortState.DateCreateDesc => company.OrderByDescending(s => s.startDate),
+                SortState.DateEndAsc => company.OrderBy(s => s.endDate),
+                SortState.DateEndDesc => company.OrderByDescending(s => s.endDate),
+                _ => company.OrderBy(s => s.companyName),
+            };
+
+            return company.ToList();
         }
     }
 }

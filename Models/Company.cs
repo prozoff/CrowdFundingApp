@@ -16,7 +16,7 @@ namespace CrowdFundingApp.Models
         public double needDonate { get; set; }
         public string startDate { get; set; }
         public string endDate { get; set; }
-        public double rating { get; set; }
+        public int rating { get; set; }
         public string about { get; set; }
         public string lastUpdete { get; set; }
         public string companyImg { get; set; }

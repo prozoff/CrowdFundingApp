@@ -32,7 +32,7 @@ namespace CrowdFundingApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = new User { Email = model.Email, UserName = model.Email, createDate = DateTime.Now.ToString(), profileImg = "https://res.cloudinary.com/prozoff/image/upload/v1590604182/avatar_2x_sf3k0v.png" };
+                User user = new User { Email = model.Email, UserName = model.Login, createDate = DateTime.Now.ToString(), profileImg = "https://res.cloudinary.com/prozoff/image/upload/v1590604182/avatar_2x_sf3k0v.png" };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 await _userManager.AddToRoleAsync(user, setNewRole());
 
@@ -65,7 +65,7 @@ namespace CrowdFundingApp.Controllers
             if (ModelState.IsValid)
             {
                 var result =
-                    await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
+                    await _signInManager.PasswordSignInAsync(model.Login, model.Password, false, false);
                 if (result.Succeeded)
                 {
                     if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))

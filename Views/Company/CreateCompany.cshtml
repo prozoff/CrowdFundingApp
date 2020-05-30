@@ -1,70 +1,128 @@
-﻿@model CrowdFundingApp.ViewModels.CreateCompanyViewModel
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model CrowdFundingApp.ViewModels.CreateCompanyViewModel
 @{
     ViewBag.Title = "Create new company";
 }
-    <form asp-action="Create" asp-controller="Company">
-        <div asp-validation-summary="All" class="text-danger"></div>
-        <div class="form-group">
-            <label asp-for="companyName" class="control-label">Name</label>
-            <input type="text" asp-for="companyName" class="form-control" />
-        </div>
-        <div class="form-group">
-            <label asp-for="needDonate" class="control-label">Funding</label>
-            <input type="text" asp-for="needDonate" class="form-control" />
-        </div>
-        <div class="form-group">
-            <label asp-for="endDate" class="control-label">End Date</label>
-            <input type="text" asp-for="endDate" class="form-control" />
-        </div>
-        <div class="form-group">
-            <label asp-for="about" class="control-label">About</label>
-            <input type="text" asp-for="about" class="form-control" />
-        </div>
-
+<div class="row justify-content-center">
+    <div class="col-2">
         <div>
-            <select asp-for="theme">
-                <option disabled selected>Choise theme</option>
-                @foreach (ThemeList themeList in Model.themeList)
-                {
-                    <option value="@themeList.themeId">@themeList.themeName</option>
-                }
-            </select>
+            <img id="newCompanyImg" src="https://res.cloudinary.com/prozoff/image/upload/v1590838360/backCompany_ebviw8.png" height="160" width="160" />
         </div>
-
         <div>
-            <div id="tags">
-                <label id="last">Tags: </label>
+            <button id="upload_widget" class="btn btn-primary btn-sm btn-block">@Localizer["ChangeImg"]</button>
+        </div>
+        <div>
+            <label>@Localizer["WriteTags"]</label>
+            <input class="form-control" id="inputLine" type="text" />
+            <div id="addTag" class="btn btn-outline-secondary" onclick="addTag()">@Localizer["AddTags"]</div>
+            <div class="row" id="last">
             </div>
-
-            <label>Write Tags</label>
-            <input id="inputLine" type="text" />
-
         </div>
-        <div id="addTag" class="btn btn-outline-secondary" onclick="addTag()">Add tag</div>
+    </div>
+    <div class="col-6">
+        <form asp-action="Create" asp-controller="Company">
+            <input hidden asp-for="@Model.company.companyImg" id="saveImg" value="https://res.cloudinary.com/prozoff/image/upload/v1590838360/backCompany_ebviw8.png" />
+            <div class="form-group">
+                <label asp-for="@Model.company.companyName" class="control-label">@Localizer["Name"]</label>
+                <input required type="text" asp-for="@Model.company.companyName" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.company.needDonate" class="control-label">@Localizer["Funding"]</label>
+                <input required type="text" asp-for="@Model.company.needDonate" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.company.endDate" class="control-label">@Localizer["EndDate"]</label>
+                <input type="text" asp-for="@Model.company.endDate" class="form-control" id="date" name="date" placeholder="Date" required>
 
-        <div class="form-group">
-            <input type="submit" value="Add" class="btn btn-outline-secondary" />
-        </div>
-    </form>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.company.about" class="control-label">@Localizer["About"]</label>
+                <textarea required asp-for="@Model.company.about" class="form-control"></textarea>
+            </div>
+            <div id="tagForm"></div>
+            <div class="m-3">
+                <select required class="custom-select mr-sm-2" asp-for="theme">
+                    <option disabled selected>@Localizer["ChooseTheme"]</option>
+                    @foreach (ThemeList themeList in Model.themeList)
+                    {
+                        <option value="@themeList.themeId">@themeList.themeName</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="@Localizer["Add"]" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
 
 @section Scripts {
     <script>
+        $(function () {
+            $('#date').daterangepicker({
+                singleDatePicker: true,
+                locale: {
+                    format: 'DD.MM.YYYY'
+                }
+            });
+        });
+
         let i = 0;
         let lastItem = document.getElementById('last');
         function addTag() {
-            let newDivTag = document.createElement("div");
             let tag = document.createElement("input");
             let getTagValue = document.getElementById('inputLine').value;
-            newDivTag.id = "tagId_" + i;
-            newDivTag.setAttribute('class', 'tag');
             tag.setAttribute('name', 'tags[' + i + ']');
             tag.setAttribute('value', getTagValue);
             tag.setAttribute('hidden', 'true');
-            newDivTag.innerHTML = getTagValue;
-            newDivTag.append(tag);
-            lastItem.append(newDivTag);
+            tag.id = 'inputTag_' + i;
+            document.getElementById('tagForm').append(tag);
+
+            createTag(i, getTagValue);
+            document.getElementById('inputLine').value = '';
             i++
         }
 
+        function createTag(i, getTagValue) {
+            let newTag = document.createElement('div');
+            let inTag = document.createElement('a');
+            newTag.id = 'tagId_' + i;
+            newTag.setAttribute('class', 'p-1');
+            newTag.setAttribute('onclick', 'removeTag(' + i + ')')
+            inTag.setAttribute('class', 'text-white badge badge-pill badge-primary');
+            inTag.innerHTML = '#' + getTagValue;
+            newTag.append(inTag);
+            document.getElementById('last').append(newTag);
+        };
+
+        function removeTag(id) {
+            let tag = document.getElementById('tagId_' + id)
+            let inputTag = document.getElementById('inputTag_' + id);
+            inputTag.remove();
+            tag.remove();
+        }
+
+    </script>
+    <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        let newImg;
+        let currentImg = document.getElementById('newCompanyImg');
+        var myWidget = cloudinary.createUploadWidget({
+            cloudName: 'prozoff',
+            uploadPreset: 'ml_default'
+        }, (error, result) => {
+            if (!error && result && result.event === "success") {
+                console.log('Done! Here is the image info: ', result.info);
+                newImg = result.info.secure_url;
+                currentImg.setAttribute('src', newImg);
+                document.getElementById('saveImg').setAttribute('value', newImg);
+            }
+        });
+        document.getElementById("upload_widget").addEventListener("click", function () {
+            myWidget.open();
+        }, false);
     </script>
 }

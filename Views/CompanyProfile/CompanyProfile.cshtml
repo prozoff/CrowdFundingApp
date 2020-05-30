@@ -1,64 +1,95 @@
-﻿@model CrowdFundingApp.ViewModels.CompanyProfileViewModel
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model CrowdFundingApp.ViewModels.CompanyProfileViewModel
 @{
     ViewData["Title"] = "Company Profile";
 }
 
-<a asp-controller="CompanyProfile" asp-action="EditCompany" asp-route-companyId="@Model.companyProfile.companyId">Edit Company</a>
-<a asp-controller="News" asp-action="createNews" asp-route-companyId="@Model.companyProfile.companyId">Create News</a>
 
-<p>Name: @Model.companyProfile.companyName</p>
-<p>Theme: @Model.themeName.theme.themeName</p>
-<p>rating: @Model.companyProfile.CompanyRatings</p>
-<p>money need: @Model.companyProfile.needDonate</p>
-<p>total donate: @Model.companyProfile.totaldonate</p>
-<p>total About: @Model.companyProfile.about</p>
+<div class="rating-area">
+    <input type="radio" id="star-5" name="rating" value="5">
+    <label for="star-5" onclick="submitRating(5)"></label>
+    <input type="radio" id="star-4" name="rating" value="4">
+    <label for="star-4" onclick="submitRating(4)"></label>
+    <input type="radio" id="star-3" name="rating" value="3">
+    <label for="star-3" onclick="submitRating(3)"></label>
+    <input type="radio" id="star-2" name="rating" value="2">
+    <label for="star-2" onclick="submitRating(2)"></label>
+    <input type="radio" id="star-1" name="rating" value="1">
+    <label for="star-1" onclick="submitRating(1)"></label>
+</div>
+<form hidden asp-action="voteRating" asp-controller="CompanyProfile" asp-route-companyId="@Model.companyProfile.companyId">
+    <input id="ratingFormValue" asp-for="@Model.companyProfile.rating" value="" />
+    <input id="submitRating" type="submit" />
+</form>
+
+
+<p>@Localizer["Name"]: @Model.companyProfile.companyName</p>
+<p>@Localizer["Theme"]: @Model.themeName.theme.themeName</p>
+<p>@Localizer["Rating"]: @Model.companyProfile.rating</p>
+<p>@Localizer["moneyNeed"]: @Model.companyProfile.needDonate</p>
+<p>@Localizer["TotalDonate"]: @Model.companyProfile.totaldonate</p>
+<p>@Localizer["About"]: @Model.companyProfile.about</p>
 
 <div>
     <table class="table">
-        <tr><th>Bonus</th><th>Cost</th><th></th></tr>
+        <tr><th>@Localizer["Bonus"]</th><th>@Localizer["Cost"]</th><th>@Localizer["AboutBonus"]</th></tr>
         @foreach (BonusList bonusList in Model.companyProfile.BonusList)
         {
             <tr>
                 <td>@bonusList.bonusName</td>
                 <td>@bonusList.bonusCost</td>
+                <td>@bonusList.aboutBonus</td>
+                <td>
+                    <form asp-action="support" asp-controller="Bonus" asp-route-companyId="@Model.companyProfile.companyId">
+                        <input hidden asp-for="@Model.bonus.bonusId" value="@bonusList.bonusId" />
+                        <input type="submit" class="btn btn-primary" value="@Localizer["SupportUs"]" />
+                    </form>
+                </td>
             </tr>
         }
     </table>
 </div>
 <div>
-    <table class="table">
-        <tr><th>img</th><th>Headler</th><th>News</th><th>Date</th></tr>
-        @foreach (News news in Model.companyProfile.News)
-        {
-            <tr>
-                <td></td>
-                <td>@news.newsName</td>
-                <td>@news.newsText</td>
-                <td>@news.newsDate</td>
-            </tr>
-        }
-    </table>
+    @foreach (News news in Model.companyProfile.News)
+    {
+        <div class="media">
+            <img src="@news.newsImg" height="128" width="128" class="align-self-start mr-3">
+            <div class="media-body">
+                <h5 class="mt-0">@news.newsName</h5>
+                <p>@news.newsText</p>
+            </div>
+            <div>
+                <a asp-action="editNews" asp-controller="News" class="btn btn-primary btn-sm" asp-route-companyId="@Model.companyProfile.companyId" asp-route-newsId="@news.newsId">@Localizer["Edit"]</a>
+                <a asp-action="deleteNews" asp-controller="News" class="btn btn-primary btn-sm" asp-route-companyId="@Model.companyProfile.companyId" asp-route-newsId="@news.newsId">@Localizer["Delete"]</a>
+            </div>
+        </div>
+    }
 </div>
+
+<a asp-controller="CompanyProfile" asp-action="EditCompany" asp-route-companyId="@Model.companyProfile.companyId">@Localizer["EditCompany"]</a>
+<a asp-controller="News" asp-action="createNews" asp-route-companyId="@Model.companyProfile.companyId">@Localizer["CreateNews"]</a>
+
 <hr />
 <div id="comments" class="shadow-sm p-3 mb-5 bg-white rounded">
     <p>Comments :</p>
     @if (Model.comments.Count == 0)
     {
-        <p>No comments</p>
+        <p>@Localizer["NoComments"]</p>
     }
     else
     {
         @foreach (Comments comment in Model.comments)
         {
             <div class="media">
-                <img id="profileImg" src="@comment.user.profileImg" class="p-1 align-self-start sm-3 rounded-circle" alt="avatar" height="64" width="64">
+                <img id="profileImg" src="@comment.user.profileImg" class="mr-3 align-self-start sm-3 rounded-circle" alt="avatar" height="64" width="64">
                 <div class="media-body">
                     <h5 class="mt-0">@comment.user.UserName</h5>
-                    <p>@comment.comentText</p>
+                    <p>@comment.commentText</p>
                     <div class="text-right">
-                        <button id="btnLike_@comment.ComentId" class="btn btn-outline-primary btn-sm" onclick="submitForm('like', @comment.ComentId)">+</button>
+                        <button id="btnLike_@comment.ComemntId" class="btn btn-outline-primary btn-sm" onclick="submitForm('like', @comment.ComemntId)">+</button>
                         <span>@comment.like</span>
-                        <button id="btnDisike_@comment.ComentId" class="btn btn-outline-primary btn-sm" onclick="submitForm('dislike', @comment.ComentId)">-</button>
+                        <button id="btnDisike_@comment.ComemntId" class="btn btn-outline-primary btn-sm" onclick="submitForm('dislike', @comment.ComemntId)">-</button>
                     </div>
                     <hr />
                 </div>
@@ -77,14 +108,26 @@
             <img id="profileImg" src="@Model.currentUser.profileImg" class="p-1 align-self-start sm-3 rounded-circle" alt="avatar" height="64" width="64">
             <div class="media-body">
                 <h5 class="mt-0">@Model.currentUser.UserName</h5>
-                <textarea class="mt=0 form-control" aria-label="With textarea" asp-for="@Model.comment.comentText"></textarea>
-                <input type="submit" class="btn btn-primary" value="Comment" />
+                <textarea class="mt=0 form-control" aria-label="With textarea" asp-for="@Model.comment.commentText"></textarea>
+                <input type="submit" class="btn btn-primary" value="@Localizer["sendComment"]" />
             </div>
         </div>
     </form>
 </div>
 
 <script>
+    $(document).ready(function () {
+        let rating = @Model.companyProfile.rating;
+        if (rating != 0) {
+            document.getElementById('star-' + rating).setAttribute('checked', this.checked);
+        }
+    });
+
+    function submitRating(valueRating) {
+        document.getElementById('ratingFormValue').setAttribute('value', valueRating);
+        document.getElementById('submitRating').click();
+    }
+
     function submitForm(likeValue, commentId) {
         document.getElementById('valueLike').setAttribute('value', likeValue);
         document.getElementById('valueCommentId').setAttribute('value', commentId);

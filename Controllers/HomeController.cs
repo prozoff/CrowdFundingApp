@@ -8,6 +8,8 @@ using Microsoft.Extensions.Logging;
 using CrowdFundingApp.Models;
 using Microsoft.EntityFrameworkCore;
 using CrowdFundingApp.ViewModels;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Http;
 
 namespace CrowdFundingApp.Controllers
 {
@@ -26,10 +28,34 @@ namespace CrowdFundingApp.Controllers
         {
             HomeViewModel model = new HomeViewModel
             {
-                lastUpdeteCompany = db.Company.Include(v => v.creater).ToList(),
-                ratedCompany = db.Company.Include(v => v.creater).ToList()
+                lastUpdeteCompany = sortedCompanyUpdate(),
+                ratedCompany = sortedCompanyRating(),
+                tagLists = db.TagLists.ToList()
             };
             return View(model);
+        }
+
+        public IActionResult SetLanguage(string culture, string returnUrl)
+        {
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
+            );
+
+            return LocalRedirect(returnUrl);
+        }
+
+        private List<Company> sortedCompanyUpdate()
+        {
+            IQueryable<Company> company = db.Company.Include(c => c.creater).OrderByDescending(u => u.lastUpdete);
+            return company.ToList();
+        }
+
+        private List<Company> sortedCompanyRating()
+        {
+            IQueryable<Company> company = db.Company.Include(c => c.creater).OrderByDescending(r => r.rating);
+            return company.ToList();
         }
 
         public IActionResult Privacy()
@@ -43,19 +69,5 @@ namespace CrowdFundingApp.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult toCompany()
-        {
-            return RedirectToAction("Index", "Company");
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult toUsers()
-        {
-            return RedirectToAction("Index", "Users");
-        }
     }
 }

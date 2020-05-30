@@ -1,60 +1,62 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model CrowdFundingApp.ViewModels.HomeViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
-<div class="jumbotron jumbotron-fluid">
+<div class="jumbotron jumbotron-fluid" style="background-image: url(https://res.cloudinary.com/prozoff/image/upload/v1590778202/bg_z7k6c6.jpg)">
     <div class="container">
-        <h1 class="display-4">Crownd Findin App</h1>
-        <p class="lead">By Prozoff</p>
+        <h1 class="display-4 text-white">Crownd Findin App</h1>
+        <p class="lead text-white">By Prozoff</p>
     </div>
 </div>
 
-@if (User.Identity.IsAuthenticated)
-{
-    <p>@User.Identity.Name</p>
+<div class="col-12">
+    <div class="row">
+        <span>@Localizer["Tags"] : </span>
+        @{
+            int i = 0;
+        }
+        @foreach (TagList tag in Model.tagLists)
+        {
+            if (i > 10) { break; }
+            i++;
+            <div class="p-1">
+                <a class="text-white badge badge-pill badge-primary">#@tag.tagName</a>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-8">
+        <h4>@Localizer["MostPopularCompany"]:</h4>
+        <div>
+            @foreach (Company company in Model.ratedCompany)
+            {
+                <div class="media p-2">
+                    <img src="@company.companyImg" height="128" width="128" class="align-self-start mr-3" alt="...">
+                    <div class="media-body">
+                        <h5 class="mt-0"><a asp-controller="CompanyProfile" asp-action="CompanyProfile" asp-route-companyId="@company.companyId">@company.companyName</a></h5>
+                        <p>@company.about</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="col-4">
+        <h5>@Localizer["LastUpdeteCompany"] : </h5>
+        @foreach (Company company in Model.lastUpdeteCompany)
+        {
+            <div class="media p-1">
+                <img src="@company.companyImg" height="64" width="64" class="align-self-start mr-3" alt="...">
+                <div class="media-body">
+                    <h5 class="mt-0"><a asp-controller="CompanyProfile" asp-action="CompanyProfile" asp-route-companyId="@company.companyId">@company.companyName</a></h5>
+                </div>
+            </div>
+        }
+    </div>
+</div>
 
 
-    <form method="post" asp-controller="Home" asp-action="toCompany">
-        <input type="submit" value="Company" />
-    </form>
 
-}
-else
-{
-    <a asp-controller="Account" asp-action="Login">Login</a>
-    <a asp-controller="Account" asp-action="Register">Registeration</a>
-}
-
-<table class="table">
-    <tr><th>Name</th><th>Creater</th><th>About</th><th>Begin</th><th>End</th><th>Need</th><th>Found</th></tr>
-    @foreach (Company company in Model.lastUpdeteCompany)
-    {
-        <tr>
-            <td>@company.companyName</td>
-            <td>@company.creater</td>
-            <td>@company.about</td>
-            <td>@company.startDate</td>
-            <td>@company.endDate</td>
-            <td>@company.needDonate</td>
-            <td>@company.totaldonate</td>
-
-        </tr>
-    }
-</table>
-
-<table class="table">
-    <tr><th>Name</th><th>Creater</th><th>About</th><th>Begin</th><th>End</th><th>Need</th><th>Found</th><th>Rating</th></tr>
-    @foreach (Company company in Model.ratedCompany)
-    {
-        <tr>
-            <td>@company.companyName</td>
-            <td>@company.creater</td>
-            <td>@company.about</td>
-            <td>@company.startDate</td>
-            <td>@company.endDate</td>
-            <td>@company.needDonate</td>
-            <td>@company.totaldonate</td>
-            <td>@company.rating</td>
-
-        </tr>
-    }
-</table>

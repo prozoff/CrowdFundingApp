@@ -1,0 +1,21 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model CrowdFundingApp.ViewModels.PurceViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+<h4>Add cash for @Model.user.UserName</h4>
+<form asp-action="addMoney" asp-controller="Purce">
+    <label>@Localizer["InputAmount"] :</label>
+    <div class="col-3">
+        <div class="input-group mb-2">
+            <div class="input-group-prepend">
+                <div class="input-group-text">$</div>
+            </div>
+            <input type="text" asp-for="@Model.user.purce" class="form-control" id="inlineFormInputGroup" value="">
+        </div>
+        <div>
+            <input type="submit" class="btn btn-primary" value="@Localizer["Pay"]"/>
+        </div>
+    </div>
+</form>

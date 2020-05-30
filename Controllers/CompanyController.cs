@@ -42,22 +42,27 @@ namespace CrowdFundingApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateCompanyViewModel model)
         {
+            string currentUser = User.Identity.Name;
+            User user = await _userManager.FindByNameAsync(currentUser);
+            Company company = new Company { 
+                companyName = model.company.companyName, 
+                creater = user, totaldonate = 0, 
+                needDonate = model.company.needDonate, 
+                startDate = DateTime.Now.ToString("dd.MM.yyyy"), 
+                endDate = model.company.endDate, 
+                about = model.company.about, 
+                companyImg = model.company.companyImg, 
+                lastUpdete = DateTime.Now.ToString("dd.MM.yyyy") 
+            };
+            ThemeList theme = db.ThemeLists.Where(t => t.themeId == model.theme).FirstOrDefault();
+            CompanyTheme companyTheme = new CompanyTheme { company = company, theme = theme };
+            addTags(model, company);
+            db.Company.Add(company);
+            db.CompanyTheme.Add(companyTheme);
+            await db.SaveChangesAsync();
 
-            if (ModelState.IsValid)
-            {
-                string currentUser = User.Identity.Name;
-                User user = await _userManager.FindByNameAsync(currentUser);
-                Company company = new Company { companyName = model.companyName, creater = user, totaldonate = 0, needDonate = model.needDonate, startDate = DateTime.Now.ToString(), endDate = model.endDate, about = model.about };
-                ThemeList theme = db.ThemeLists.Where(t => t.themeId == model.theme).FirstOrDefault();
-                CompanyTheme companyTheme = new CompanyTheme { company = company, theme = theme };
-                addTags(model, company);
-                db.Company.Add(company);
-                db.CompanyTheme.Add(companyTheme);
-                await db.SaveChangesAsync();
-
-                return RedirectToAction("CompanyProfile", "CompanyProfile", new { company.companyId });
-            }
-            return View(model);
+            return RedirectToAction("CompanyProfile", "CompanyProfile", new { company.companyId });
+            
         }
 
         private void addTags(CreateCompanyViewModel model, Company company)

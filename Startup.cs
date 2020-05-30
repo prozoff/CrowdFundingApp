@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using CrowdFundingApp.Models;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,6 +30,8 @@ namespace CrowdFundingApp
             services.AddDbContext<ApplicationContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+
             services.AddIdentity<User, IdentityRole>(opts => {
                 opts.Password.RequiredLength = 1;   // минимальная длина
                 opts.Password.RequireNonAlphanumeric = false;   // требуются ли не алфавитно-цифровые символы
@@ -37,7 +41,22 @@ namespace CrowdFundingApp
             })
                 .AddEntityFrameworkStores<ApplicationContext>();
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddDataAnnotationsLocalization()
+                .AddViewLocalization();
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new[]
+                {
+                    new CultureInfo("en"),
+                    new CultureInfo("ru")
+                };
+
+                options.DefaultRequestCulture = new RequestCulture("en");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            });
+
             services.AddSignalR();
         }
 
@@ -47,7 +66,7 @@ namespace CrowdFundingApp
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseRequestLocalization();
             app.UseRouting();
 
             app.UseAuthentication();

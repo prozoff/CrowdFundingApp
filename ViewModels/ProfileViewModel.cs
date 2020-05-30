@@ -9,6 +9,7 @@ namespace CrowdFundingApp.ViewModels
     public class ProfileViewModel
     {
         public User user { get; set; }
+        public Company company { get; set; }
         public List<Company> companies { get; set; }
 
         public ProfileViewModel()

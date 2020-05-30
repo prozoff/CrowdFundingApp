@@ -1,46 +1,75 @@
-﻿@model CrowdFundingApp.ViewModels.CompanyProfileViewModel
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model CrowdFundingApp.ViewModels.CompanyProfileViewModel
 @{
     ViewData["Title"] = "EditCompany";
 }
 
-
-    <form method="post" asp-controller="CompanyProfile" asp-action="Save">
-
-        <div hidden>
-            <input value="@Model.companyProfile.companyId" asp-for="companyId" />
+<div class="row justify-content-center">
+    <div class="col-2">
+        <div>
+            <img id="newCompanyImg" src="@Model.companyProfile.companyImg" height="160" width="160" />
         </div>
         <div>
-            <label asp-for="companyName"></label><br />
-            <input value="@Model.companyProfile.companyName" asp-for="companyName" />
+            <button id="upload_widget" class="btn btn-primary btn-sm btn-block">@Localizer["ChangeImg"]</button>
         </div>
-        <div>
-            <label asp-for="about"></label><br />
-            <input value="@Model.companyProfile.about" asp-for="about" />
-        </div>
-        <div>
-            <input type="submit" value="Save" />
-        </div>
+    </div>
+    <div class="col-6">
+        <form method="post" asp-controller="CompanyProfile" asp-action="Save" asp-route-companyId="@Model.companyProfile.companyId">
+            <input hidden asp-for="@Model.companyProfile.companyImg" id="saveImg" value="@Model.companyProfile.companyImg" />
+            <div class="form-group">
+                <label asp-for="@Model.companyProfile.companyName" class="control-label">@Localizer["CompanyName"]</label><br />
+                <input required class="form-control" value="@Model.companyProfile.companyName" asp-for="@Model.companyProfile.companyName" />
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.companyProfile.about" class="control-label">@Localizer["About"]</label><br />
+                <textarea required class="form-control" asp-for="@Model.companyProfile.about">@Model.companyProfile.about</textarea>
+            </div>
+            <div>
+                <input class="btn btn-primary btn-sm" type="submit" value="@Localizer["Save"]" />
+            </div>
+        </form>
+        <a class="btn btn-danger btn-sm" asp-controller="CompanyProfile" asp-action="deleteCompany" asp-route-companyId="@Model.companyProfile.companyId">@Localizer["DeleteCompany"]</a>
+    </div>
+</div>
+<hr />
+<div class="row justify-content-center">
+    <div class="col-6">
+        <a class="btn btn-primary btn-sm" asp-controller="CompanyProfile" asp-action="addBonus" asp-route-companyId="@Model.companyProfile.companyId">@Localizer["AddBonus"]</a>
+        <table class="table">
+            <tr><th>@Localizer["Bonus"]</th><th>@Localizer["Cost"]</th><th>@Localizer["About"]</th><th></th></tr>
+            @foreach (BonusList bonusList in Model.bonusList)
+            {
+                <tr>
+                    <td>@bonusList.bonusName</td>
+                    <td>@bonusList.bonusCost</td>
+                    <td>@bonusList.aboutBonus</td>
+                    <td><a class="btn btn-primary btn-sm" asp-controller="CompanyProfile" asp-action="editBonus" asp-route-bonusId="@bonusList.bonusId" asp-route-companyId="@Model.companyProfile.companyId">@Localizer["EditBonus"]</a></td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
 
-        <div>
-            <button asp-controller="CompanyProfile" asp-action="addBonus" asp-route-companyId="@Model.companyProfile.companyId">add Bonus</button>
-
-            <table class="table">
-                <tr><th>Bonus</th><th>Cost</th><th></th></tr>
-                @foreach (BonusList bonusList in Model.bonusList)
-                {
-                    <tr>
-                        <td>@bonusList.bonusName</td>
-                        <td>@bonusList.bonusCost</td>
-                    </tr>
-                }
-            </table>
-        </div>
-
-        <button type="submit" class="btn btn-sm btn-danger" asp-action="deleteCompany" asp-route-companyId="@Model.companyProfile.companyId">Delete Company</button>
-
-    </form>
-
-
+<script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
+<script type="text/javascript">
+    let newImg;
+    let currentImg = document.getElementById('newCompanyImg');
+    var myWidget = cloudinary.createUploadWidget({
+        cloudName: 'prozoff',
+        uploadPreset: 'ml_default'
+    }, (error, result) => {
+        if (!error && result && result.event === "success") {
+            console.log('Done! Here is the image info: ', result.info);
+            newImg = result.info.secure_url;
+            currentImg.setAttribute('src', newImg);
+            document.getElementById('saveImg').setAttribute('value', newImg);
+        }
+    });
+    document.getElementById("upload_widget").addEventListener("click", function () {
+        myWidget.open();
+    }, false);
+</script>
 
 
 

@@ -8,12 +8,6 @@ namespace CrowdFundingApp.ViewModels
 {
     public class CreateCompanyViewModel
     {
-        public string companyName { get; set; }
-        public string createrId { get; set; }
-        public double needDonate { get; set; }
-        public string startDate { get; set; }
-        public string endDate { get; set; }
-        public string about { get; set; }
         public int theme { get; set; }
         public Company company { get; set; }
         public IList<string> tags { get; set; }

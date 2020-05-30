@@ -1,4 +1,6 @@
-﻿@model CrowdFundingApp.ViewModels.ProfileViewModel
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model CrowdFundingApp.ViewModels.ProfileViewModel
 @{
     ViewData["Title"] = "Profile";
 }
@@ -8,29 +10,28 @@
 {
     @if (User.Identity.IsAuthenticated)
     {
-        <div class="row">
-            <div class="col-sm-10"><h3>Hello, @User.Identity.Name</h3></div>
+        <div class="row justify-content-center">
+            <div><h3>@Localizer["Hello"], @User.Identity.Name</h3></div>
         </div>
-        <div class="row">
+        <div class="row justify-content-center">
             <div class="col-2">
-                <div>
+                <div class="mr-3">
                     <img id="profileImg" src="@Model.user.profileImg" class="rounded" alt="avatar" width="160" height="160">
                 </div>
                 <div>
-                    <button id="upload_widget" class="btn btn-primary btn-sm btn-block">Change avatar</button>
+                    <button id="upload_widget" class="btn btn-primary btn-sm btn-block">@Localizer["ChangeAvatar"]</button>
                     <form asp-action="changeAvatar" asp-controller="Profile" asp-route-userId="@Model.user.Id">
                         <input hidden asp-for="@Model.user.profileImg" id="saveAvatar" value="" />
-                        <input id="btnSave" type="submit" class="btn btn-secondary btn-sm btn-block" disabled value="Save"/>
+                        <input id="btnSave" type="submit" class="btn btn-secondary btn-sm btn-block" disabled value="@Localizer["Save"]" />
                     </form>
                 </div>
             </div>
-            <div class="col-1"></div>
-            <div class="col-6">
+            <div class="col-4">
                 <table class="table table-bordered table-sm">
                     <tbody>
                         <tr>
-                            <td class="col-1"><label>Login</label></td>
-                            <td class="col-5">
+                            <td class="col-1"><label>@Localizer["Login"]</label></td>
+                            <td class="col-3">
                                 <a href="#" id="login">@User.Identity.Name</a>
                                 <form id="formLogin" hidden asp-action="editLogin" asp-controller="Profile" asp-route-userId="@Model.user.Id">
                                     <div class="form-row">
@@ -38,7 +39,23 @@
                                             <input type="text" class="form-control-sm mb-2" asp-for="@Model.user.UserName" value="@Model.user.UserName">
                                         </div>
                                         <div class="col-auto">
-                                            <button type="submit" class="btn-primary">Submit</button>
+                                            <button type="submit" class="btn-primary">@Localizer["Submit"]</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-1"><label>Email</label></td>
+                            <td class="col-3">
+                                <a href="#" id="login">@Model.user.Email</a>
+                                <form id="formLogin" hidden asp-action="" asp-controller="Profile" asp-route-userId="@Model.user.Id">
+                                    <div class="form-row">
+                                        <div class="col-auto">
+                                            <input type="text" class="form-control-sm mb-2" asp-for="@Model.user.Email" value="@Model.user.Email">
+                                        </div>
+                                        <div class="col-auto">
+                                            <button type="submit" class="btn-primary">@Localizer["Submit"]</button>
                                         </div>
                                     </div>
                                 </form>
@@ -47,31 +64,52 @@
                     </tbody>
                 </table>
             </div>
+            <div class="col-2">
+                <form method="post" asp-controller="Account" asp-action="Logout">
+                    <input class="btn btn-primary btn-sm btn-block m-1" type="submit" value="@Localizer["Logout"]" />
+                </form>
+                <a class="btn btn-primary btn-sm btn-block m-1" asp-controller="Company" asp-action="CreateCompany">Create company</a>
+                <a class="btn btn-primary btn-sm btn-block m-1" asp-action="index" asp-controller="Purce">Purce : $ @Model.user.purce</a>
+            </div>
         </div>
         <br>
-        <form method="post" asp-controller="Account" asp-action="Logout">
-            <input type="submit" value="Logout" />
-        </form>
 
-        <a asp-controller="Company" asp-action="CreateCompany">Create</a>
+        <div class="row justify-content-center">
+            <div class="col-10">
 
-        <table class="table">
-            <tr><th>Name</th><th>Creater</th><th>About</th><th>Begin</th><th>End</th><th>Need</th><th>Found</th><th></th></tr>
-            @foreach (var company in Model.companies)
-            {
-                <tr>
-                    <td>@company.companyName</td>
-                    <td>@company.creater</td>
-                    <td>@company.about</td>
-                    <td>@company.startDate</td>
-                    <td>@company.endDate</td>
-                    <td>@company.needDonate</td>
-                    <td>@company.totaldonate</td>
-                    <td><a asp-controller="Company" asp-action="editCompany">Edit</a></td>
+                <form>
+                    <table class="table table-bordered table-sm">
+                        <tr>
+                            <th><a asp-route-sortOrder="@ViewBag.NameSort">@Localizer["Name"]</a></th>
+                            <th><a asp-route-sortOrder="@ViewBag.DateBeginSort">@Localizer["Start"]</a></th>
+                            <th><a asp-route-sortOrder="@ViewBag.DateEndSort">@Localizer["End"]</a></th>
+                            <th><a asp-route-sortOrder="@ViewBag.TotalDonateSort">@Localizer["Fund"]</a></th>
+                            <th><a asp-route-sortOrder="@ViewBag.NeedDonateSort">@Localizer["Need"]</a></th>
+                        </tr>
+                        <tr>
+                            <th><input name="name" class="form-control-sm" /></th>
+                            <th><input name="beginDate" class="form-control-sm" /></th>
+                            <th><input name="endDate" class="form-control-sm" /></th>
+                            <th><input name="totalDonate" class="form-control-sm" /></th>
+                            <th><input name="needDonate" class="form-control-sm" /></th>
+                            <th><input type="submit" value="Filter" class="btn btn-default" /></th>
+                        </tr>
+                        @foreach (var company in Model.companies)
+                        {
+                            <tr>
+                                <td><a asp-controller="CompanyProfile" asp-action="CompanyProfile" asp-route-companyId="@company.companyId">@company.companyName</a></td>
+                                <td>@company.startDate</td>
+                                <td>@company.endDate</td>
+                                <td>@company.totaldonate</td>
+                                <td>@company.needDonate</td>
+                                <td><a asp-controller="CompanyProfile" asp-action="EditCompany" asp-route-companyId="@company.companyId">@Localizer["Edit"]</a></td>
 
-                </tr>
-            }
-        </table>
+                            </tr>
+                        }
+                    </table>
+                </form>
+            </div>
+        </div>
     }
 }
 

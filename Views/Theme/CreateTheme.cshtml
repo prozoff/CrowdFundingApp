@@ -1,15 +1,21 @@
-﻿@model CrowdFundingApp.ViewModels.ThemesViewModel
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model CrowdFundingApp.ViewModels.ThemesViewModel
 @{
-    ViewData["Title"] = "CreateTheme";
+    ViewData["Title"] = "Create Theme";
 }
 
-<form asp-action="Create" asp-controller="Theme">
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="form-group">
-        <label asp-for="themeName" class="control-label">Theme name</label>
-        <input type="text" asp-for="themeName" class="form-control" />
+<div class="row justify-content-center">
+    <div class="col-4">
+        <form class="form-control" asp-action="Create" asp-controller="Theme">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="themeName" class="control-label">@Localizer["ThmeName"]</label>
+                <input type="text" asp-for="themeName" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="@Localizer["Add"]" class="btn btn-primary" />
+            </div>
+        </form>
     </div>
-    <div class="form-group">
-        <input type="submit" value="Add" class="btn btn-outline-secondary" />
-    </div>
-</form>
+</div>

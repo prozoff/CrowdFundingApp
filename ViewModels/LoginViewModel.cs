@@ -10,7 +10,7 @@ namespace CrowdFundingApp.ViewModels
     {
         [Required]
         [Display(Name = "Login")]
-        public string Email { get; set; }
+        public string Login { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
