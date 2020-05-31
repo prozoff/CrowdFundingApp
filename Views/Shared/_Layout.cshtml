@@ -34,7 +34,7 @@
                     </ul>
                 </div>
                 <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <input class="form-control mr-sm-2" type="search" placeholder="@Localizer["Search"]" aria-label="Search">
                     <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">@Localizer["Search"]</button>
                 </form>
                 @if (User.Identity.IsAuthenticated)
@@ -47,7 +47,7 @@
                             <a class="dropdown-item" asp-controller="Profile" asp-action="Profile">@Localizer["Profile"]</a>
                             <a class="dropdown-item" asp-controller="Account" asp-action="Logout">@Localizer["Logout"]</a>
                             @if (User.IsInRole("Admin"))
-                            {<a class="dropdown-item" asp-controller="Admin" asp-action="Index">@Localizer["Admin"]</a>}
+                            {<a class="dropdown-item" asp-controller="Users" asp-action="Index">@Localizer["Admin"]</a>}
                         </div>
                     </div>
                 }

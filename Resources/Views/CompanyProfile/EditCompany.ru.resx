@@ -141,7 +141,13 @@
   <data name="EditBonus" xml:space="preserve">
     <value>Редактировать бонус</value>
   </data>
+  <data name="pasteLink" xml:space="preserve">
+    <value>Вставте ссылку сюда</value>
+  </data>
   <data name="Save" xml:space="preserve">
     <value>Сохранить</value>
+  </data>
+  <data name="YouTubeLink" xml:space="preserve">
+    <value>Ссылка на видио с YouTube</value>
   </data>
 </root>

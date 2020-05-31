@@ -14,13 +14,14 @@ namespace CrowdFundingApp.Models
         public User creater { get; set; }
         public double totaldonate { get; set; }
         public double needDonate { get; set; }
-        public string startDate { get; set; }
-        public string endDate { get; set; }
+        public DateTime startDate { get; set; }
+        public DateTime endDate { get; set; }
         public int rating { get; set; }
         public string about { get; set; }
-        public string lastUpdete { get; set; }
+        public DateTime lastUpdete { get; set; }
         public string companyImg { get; set; }
 
+        public List<UserBonus> UserBonus { get; set; }
         public List<BonusList> BonusList { get; set; }
         public List<News> News { get; set; }
         public List<CompanyTag> CompanyTag { get; set; }

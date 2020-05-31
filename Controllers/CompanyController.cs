@@ -24,7 +24,14 @@ namespace CrowdFundingApp.Controllers
             db = context;
         }
 
-        public IActionResult Index() => View(db.Company.Include(u => u.creater).ToList());
+        public IActionResult Index()
+        {
+            List<Company> companies = db.Company.ToList();
+            CompanyViewModel model = new CompanyViewModel { companies = companies };
+            return View(model);
+        }
+
+
         public IActionResult CreateCompany()
         {
             CreateCompanyViewModel model = new CreateCompanyViewModel
@@ -48,21 +55,38 @@ namespace CrowdFundingApp.Controllers
                 companyName = model.company.companyName, 
                 creater = user, totaldonate = 0, 
                 needDonate = model.company.needDonate, 
-                startDate = DateTime.Now.ToString("dd.MM.yyyy"), 
+                startDate = DateTime.Now, 
                 endDate = model.company.endDate, 
                 about = model.company.about, 
                 companyImg = model.company.companyImg, 
-                lastUpdete = DateTime.Now.ToString("dd.MM.yyyy") 
+                lastUpdete = DateTime.Now
             };
+            ResourcesLinks resourcesLink = new ResourcesLinks { type = "vidio", link = editLink(model.resourcesLink.link), company = company };
             ThemeList theme = db.ThemeLists.Where(t => t.themeId == model.theme).FirstOrDefault();
             CompanyTheme companyTheme = new CompanyTheme { company = company, theme = theme };
             addTags(model, company);
+            db.ResourcesLinks.Add(resourcesLink);
             db.Company.Add(company);
             db.CompanyTheme.Add(companyTheme);
             await db.SaveChangesAsync();
 
             return RedirectToAction("CompanyProfile", "CompanyProfile", new { company.companyId });
             
+        }
+
+        private string editLink(string link)
+        {
+            if (link != null)
+            {
+                if (link.Contains("/watch?v=") || link.Contains("youtu.be"))
+                {
+                    int index = link.IndexOf("/watch?v=");
+                    link = link.Substring(index + 9);
+                    link = "https://www.youtube.com/embed/" + link;
+                    return link;
+                }
+            }   
+            return "";
         }
 
         private void addTags(CreateCompanyViewModel model, Company company)
@@ -80,6 +104,11 @@ namespace CrowdFundingApp.Controllers
                 }
                 addCompanyTag(tag, company);
             }
+        }
+
+        public IActionResult showTag(int tagId)
+        {
+            return View(); //todo
         }
 
         private void addCompanyTag(TagList tag, Company company)

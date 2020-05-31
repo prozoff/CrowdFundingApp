@@ -123,6 +123,9 @@
   <data name="MostPopularCompany" xml:space="preserve">
     <value>Most popular compnay</value>
   </data>
+  <data name="Rating" xml:space="preserve">
+    <value>Rating</value>
+  </data>
   <data name="Tags" xml:space="preserve">
     <value>Tags</value>
   </data>

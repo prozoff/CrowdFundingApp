@@ -15,7 +15,7 @@
         <div>
             <label>@Localizer["WriteTags"]</label>
             <input class="form-control" id="inputLine" type="text" />
-            <div id="addTag" class="btn btn-outline-secondary" onclick="addTag()">@Localizer["AddTags"]</div>
+            <div id="addTag" class="btn btn-primary sm" onclick="addTag()">@Localizer["AddTags"]</div>
             <div class="row" id="last">
             </div>
         </div>
@@ -33,12 +33,16 @@
             </div>
             <div class="form-group">
                 <label asp-for="@Model.company.endDate" class="control-label">@Localizer["EndDate"]</label>
-                <input type="text" asp-for="@Model.company.endDate" class="form-control" id="date" name="date" placeholder="Date" required>
+                <input type="date" asp-for="@Model.company.endDate" class="form-control" required>
 
             </div>
             <div class="form-group">
                 <label asp-for="@Model.company.about" class="control-label">@Localizer["About"]</label>
                 <textarea required asp-for="@Model.company.about" class="form-control"></textarea>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.resourcesLink.link" class="control-label">@Localizer["YouTubeLink"]</label>
+                <input type="text" asp-for="@Model.resourcesLink.link" class="form-control" placeholder="@Localizer["pasteLink"]" />
             </div>
             <div id="tagForm"></div>
             <div class="m-3">
@@ -51,7 +55,9 @@
                 </select>
             </div>
             <div class="form-group">
-                <input type="submit" value="@Localizer["Add"]" class="btn btn-primary" />
+                <div class="row justify-content-end">
+                    <input type="submit" value="@Localizer["Add"]" class="btn btn-primary" />
+                </div>
             </div>
         </form>
     </div>
@@ -61,15 +67,6 @@
 
 @section Scripts {
     <script>
-        $(function () {
-            $('#date').daterangepicker({
-                singleDatePicker: true,
-                locale: {
-                    format: 'DD.MM.YYYY'
-                }
-            });
-        });
-
         let i = 0;
         let lastItem = document.getElementById('last');
         function addTag() {

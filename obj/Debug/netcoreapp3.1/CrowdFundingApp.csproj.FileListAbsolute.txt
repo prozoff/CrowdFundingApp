@@ -150,7 +150,6 @@ D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\Razor\Views\Users\
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\Razor\Views\Users\RoleList.cshtml.g.cs
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\Razor\Views\Profile\Profile.cshtml.g.cs
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\Razor\Views\CompanyProfile\CompanyProfile.cshtml.g.cs
-D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Index.cshtml.g.cs
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\Razor\Views\Theme\CreateTheme.cshtml.g.cs
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\Razor\Views\Theme\Index.cshtml.g.cs
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\Razor\Views\CompanyProfile\EditCompany.cshtml.g.cs
@@ -184,8 +183,6 @@ D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\CrowdFundingApp.Re
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\CrowdFundingApp.Resources.Views.Account.Login.ru.resources
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\CrowdFundingApp.Resources.Views.Account.Register.en.resources
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\CrowdFundingApp.Resources.Views.Account.Register.ru.resources
-D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\CrowdFundingApp.Resources.Views.Admin.index.en.resources
-D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\CrowdFundingApp.Resources.Views.Admin.index.ru.resources
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\CrowdFundingApp.Resources.Views.CompanyProfile.AddBonus.en.resources
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\CrowdFundingApp.Resources.Views.CompanyProfile.AddBonus.ru.resources
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\CrowdFundingApp.Resources.Views.CompanyProfile.CompanyProfile.en.resources
@@ -214,3 +211,9 @@ D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\CrowdFundingApp.Re
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\CrowdFundingApp.Resources.Views.Theme.CreateTheme.ru.resources
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\CrowdFundingApp.Resources.Views.Theme.index.en.resources
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\CrowdFundingApp.Resources.Views.Theme.index.ru.resources
+D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\Razor\Views\Company\ShowTag.cshtml.g.cs
+D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\CrowdFundingApp.Resources.Views.Company.Index.en.resources
+D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\CrowdFundingApp.Resources.Views.Company.index.ru.resources
+D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\Razor\Views\CompanyProfile\Gallery.cshtml.g.cs
+D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\CrowdFundingApp.Resources.Views.CompanyProfile.Gallery.en.resources
+D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\CrowdFundingApp.Resources.Views.CompanyProfile.Gallery.ru.resources

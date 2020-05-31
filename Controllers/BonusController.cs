@@ -64,8 +64,8 @@ namespace CrowdFundingApp.Controllers
 
         private void addBonusToUser(User user, BonusList bonus, int companyId)
         {
-            UserBonus userBonus = new UserBonus { user = user, bonus = bonus };
             Company company = getCompanyById(companyId);
+            UserBonus userBonus = new UserBonus { user = user, bonus = bonus, company = company };
             company.totaldonate += bonus.bonusCost;
             db.UserBonus.Add(userBonus);
         }

@@ -1,24 +1,22 @@
-﻿@model IEnumerable<CrowdFundingApp.Models.Company>
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model CrowdFundingApp.ViewModels.CompanyViewModel
 @{
     ViewBag.Title = "Company List";
 }
 
-<table class="table">
-    <tr><th>Name</th><th>Creater</th><th>About</th><th>Begin</th><th>End</th><th>Need</th><th>Found</th></tr>
-    @foreach (var company in Model)
-    {
-        <tr>
-            <td><a asp-controller="CompanyProfile" asp-action="CompanyProfile" asp-route-companyId="@company.companyId">@company.companyName</a></td>
-            <td>@company.creater</td>
-            <td>@company.about</td>
-            <td>@company.startDate</td>
-            <td>@company.endDate</td>
-            <td>@company.needDonate</td>
-            <td>@company.totaldonate</td>
+@foreach (Company company in Model.companies)
+{
+    <div class="media mb-3">
+        <img src="@company.companyImg" height="128" width="128" class="align-self-start mr-3" alt="...">
+        <div class="media-body">
+            <h5 class="mt-0"><a asp-controller="CompanyProfile" asp-action="CompanyProfile" asp-route-companyId="@company.companyId">@company.companyName</a></h5>
+            <p>@company.about</p>
+            <hr />
+            <div class="row ml-2">
+                <small class="mr-2">@Localizer["Rating"] : @company.rating</small>
+            </div>
+        </div>
+    </div>
+}
 
-        </tr>
-    }
-</table>
-
-    
-    

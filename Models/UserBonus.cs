@@ -12,5 +12,6 @@ namespace CrowdFundingApp.Models
         public int rowId { get; set; }
         public User user { get; set; }
         public BonusList bonus { get; set; }
+        public Company company { get; set; }
     }
 }

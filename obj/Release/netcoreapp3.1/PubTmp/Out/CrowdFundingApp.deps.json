@@ -300,6 +300,14 @@
         "runtime": {
           "CrowdFundingApp.dll": {}
         },
+        "resources": {
+          "en/CrowdFundingApp.resources.dll": {
+            "locale": "en"
+          },
+          "ru/CrowdFundingApp.resources.dll": {
+            "locale": "ru"
+          }
+        },
         "compile": {
           "CrowdFundingApp.dll": {}
         }

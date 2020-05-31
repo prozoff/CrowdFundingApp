@@ -141,11 +141,17 @@
   <data name="EditCompany" xml:space="preserve">
     <value>Edit Company</value>
   </data>
+  <data name="Gallery" xml:space="preserve">
+    <value>Gallery</value>
+  </data>
   <data name="moneyNeed" xml:space="preserve">
     <value>Money Need</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
+  </data>
+  <data name="News" xml:space="preserve">
+    <value>News</value>
   </data>
   <data name="NoComments" xml:space="preserve">
     <value>No Comments</value>

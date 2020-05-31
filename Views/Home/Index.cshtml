@@ -22,7 +22,7 @@
             if (i > 10) { break; }
             i++;
             <div class="p-1">
-                <a class="text-white badge badge-pill badge-primary">#@tag.tagName</a>
+                <a asp-action="showTag" asp-controller="Company" asp-route-tag="@tag.tagId" class="text-white badge badge-pill badge-primary">#@tag.tagName</a>
             </div>
         }
     </div>
@@ -39,6 +39,10 @@
                     <div class="media-body">
                         <h5 class="mt-0"><a asp-controller="CompanyProfile" asp-action="CompanyProfile" asp-route-companyId="@company.companyId">@company.companyName</a></h5>
                         <p>@company.about</p>
+                        <hr />
+                        <div class="row ml-2">
+                            <small class="mr-2">@Localizer["Rating"] : @company.rating</small>
+                        </div>
                     </div>
                 </div>
             }

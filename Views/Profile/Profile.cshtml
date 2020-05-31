@@ -68,48 +68,85 @@
                 <form method="post" asp-controller="Account" asp-action="Logout">
                     <input class="btn btn-primary btn-sm btn-block m-1" type="submit" value="@Localizer["Logout"]" />
                 </form>
-                <a class="btn btn-primary btn-sm btn-block m-1" asp-controller="Company" asp-action="CreateCompany">Create company</a>
+                <a class="btn btn-primary btn-sm btn-block m-1" asp-controller="Company" asp-action="CreateCompany">@Localizer["CreateCompany"]</a>
                 <a class="btn btn-primary btn-sm btn-block m-1" asp-action="index" asp-controller="Purce">Purce : $ @Model.user.purce</a>
             </div>
         </div>
-        <br>
-
-        <div class="row justify-content-center">
-            <div class="col-10">
-
-                <form>
+        <hr />
+        @if (Model.userBonus.Count != 0)
+        {
+            <div class="row justify-content-center">
+                <div class="col-10">
+                    <h5>@Localizer["MyBonuses"] :</h5>
                     <table class="table table-bordered table-sm">
                         <tr>
-                            <th><a asp-route-sortOrder="@ViewBag.NameSort">@Localizer["Name"]</a></th>
-                            <th><a asp-route-sortOrder="@ViewBag.DateBeginSort">@Localizer["Start"]</a></th>
-                            <th><a asp-route-sortOrder="@ViewBag.DateEndSort">@Localizer["End"]</a></th>
-                            <th><a asp-route-sortOrder="@ViewBag.TotalDonateSort">@Localizer["Fund"]</a></th>
-                            <th><a asp-route-sortOrder="@ViewBag.NeedDonateSort">@Localizer["Need"]</a></th>
+                            <th>@Localizer["fromCompany"]</th>
+                            <th>@Localizer["Bonus"]</th>
+                            <th>@Localizer["AboutBonus"]</th>
                         </tr>
-                        <tr>
-                            <th><input name="name" class="form-control-sm" /></th>
-                            <th><input name="beginDate" class="form-control-sm" /></th>
-                            <th><input name="endDate" class="form-control-sm" /></th>
-                            <th><input name="totalDonate" class="form-control-sm" /></th>
-                            <th><input name="needDonate" class="form-control-sm" /></th>
-                            <th><input type="submit" value="Filter" class="btn btn-default" /></th>
-                        </tr>
-                        @foreach (var company in Model.companies)
+                        @foreach (UserBonus userBonus in Model.userBonus)
                         {
                             <tr>
-                                <td><a asp-controller="CompanyProfile" asp-action="CompanyProfile" asp-route-companyId="@company.companyId">@company.companyName</a></td>
-                                <td>@company.startDate</td>
-                                <td>@company.endDate</td>
-                                <td>@company.totaldonate</td>
-                                <td>@company.needDonate</td>
-                                <td><a asp-controller="CompanyProfile" asp-action="EditCompany" asp-route-companyId="@company.companyId">@Localizer["Edit"]</a></td>
-
+                                <td><a asp-controller="CompanyProfile" asp-action="CompanyProfile" asp-route-companyId="@userBonus.company.companyId">@userBonus.company.companyName</a></td>
+                                <td>@userBonus.bonus.bonusName</td>
+                                <td>@userBonus.bonus.aboutBonus</td>
                             </tr>
                         }
                     </table>
-                </form>
+                </div>
             </div>
-        </div>
+        }
+        else
+        {
+            <h5>@Localizer["YouHaveNoBonuses"]</h5>
+        }
+
+        <hr />
+        @if (Model.companies.Count != 0)
+        {
+            <div class="row justify-content-center">
+                <div class="col-10">
+                    <h5>@Localizer["MyCompanies"] :</h5>
+                    <form>
+                        <table class="table table-bordered table-sm">
+                            <tr>
+                                <th><a asp-route-sortOrder="@ViewBag.NameSort">@Localizer["Name"]</a></th>
+                                <th><a asp-route-sortOrder="@ViewBag.DateBeginSort">@Localizer["Start"]</a></th>
+                                <th><a asp-route-sortOrder="@ViewBag.DateEndSort">@Localizer["End"]</a></th>
+                                <th><a asp-route-sortOrder="@ViewBag.TotalDonateSort">@Localizer["Fund"]</a></th>
+                                <th><a asp-route-sortOrder="@ViewBag.NeedDonateSort">@Localizer["Need"]</a></th>
+                            </tr>
+                            <tr>
+                                <th><input name="name" class="form-control-sm" /></th>
+                                <th><input name="beginDate" type="date" class="form-control-sm" /></th>
+                                <th><input name="endDate" type="date" class="form-control-sm" /></th>
+                                <th><input name="totalDonate" class="form-control-sm" /></th>
+                                <th><input name="needDonate" class="form-control-sm" /></th>
+                                <th><input type="submit" value="@Localizer["Filter"]" class="btn btn-default" /></th>
+                            </tr>
+                            @foreach (var company in Model.companies)
+                            {
+                                <tr>
+                                    <td><a asp-controller="CompanyProfile" asp-action="CompanyProfile" asp-route-companyId="@company.companyId">@company.companyName</a></td>
+                                    <td>@company.startDate</td>
+                                    <td>@company.endDate</td>
+                                    <td>@company.totaldonate</td>
+                                    <td>@company.needDonate</td>
+                                    <td><a asp-controller="CompanyProfile" asp-action="EditCompany" asp-route-companyId="@company.companyId">@Localizer["Edit"]</a></td>
+
+                                </tr>
+                            }
+                        </table>
+                    </form>
+                </div>
+            </div>
+        }
+        else
+        {
+            <h5>@Localizer["YouHaveNoCompany"] <a asp-controller="Company" asp-action="CreateCompany">@Localizer["CreateFirst"]</a></h5>
+        }
+
+
     }
 }
 

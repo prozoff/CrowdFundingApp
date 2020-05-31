@@ -120,6 +120,9 @@
   <data name="Login" xml:space="preserve">
     <value>Имя пользователя</value>
   </data>
+  <data name="LoginForm" xml:space="preserve">
+    <value>Вход</value>
+  </data>
   <data name="LoginTo" xml:space="preserve">
     <value>Вход</value>
   </data>

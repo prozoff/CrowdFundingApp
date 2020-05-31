@@ -10,7 +10,7 @@
         <button id="upload_widget" class="btn btn-primary btn-sm btn-block">@Localizer["ChangeImg"]</button>
     </div>
     <div class="col-6">
-        <form asp-action="saveEditNews" asp-controller="News" asp-route-companyId="@Model.company">
+        <form asp-action="saveEditNews" asp-controller="News" asp-route-companyId="@Model.company" asp-route-newsId="@Model.news.newsId">
             <input hidden asp-for="@Model.news.newsImg" id="saveImg" value="@Model.news.newsImg" />
             <div class="form-group">
                 <label class="control-label" asp-for="@Model.news.newsName">@Localizer["Headler"]</label><br />

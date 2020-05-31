@@ -11,7 +11,7 @@ namespace CrowdFundingApp.Models
     {
         public bool isBlocked { get; set; }
         public double purce { get; set; }
-        public string createDate { get; set; }
+        public DateTime createDate { get; set; }
         public string profileImg { get; set; }
 
         public List<Company> Company { get; set; }

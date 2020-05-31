@@ -141,7 +141,13 @@
   <data name="EditBonus" xml:space="preserve">
     <value>Edit Bonus</value>
   </data>
+  <data name="pasteLink" xml:space="preserve">
+    <value>Paste the link here</value>
+  </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="YouTubeLink" xml:space="preserve">
+    <value>YoyTube-link</value>
   </data>
 </root>

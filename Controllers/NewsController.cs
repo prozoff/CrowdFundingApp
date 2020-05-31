@@ -28,8 +28,8 @@ namespace CrowdFundingApp.Controllers
         public async Task<IActionResult> createAsync(NewsViewModel model, int companyId)
         {
             Company company = db.Company.FirstOrDefault(c => c.companyId == companyId);
-            News news = new News { company = company, newsDate = DateTime.Now.ToString(), newsName = model.news.newsName, newsText = model.news.newsText, newsImg = model.news.newsImg };
-            company.lastUpdete = DateTime.Now.ToString("dd.MM.yyyy");
+            News news = new News { company = company, newsDate = DateTime.Now, newsName = model.news.newsName, newsText = model.news.newsText, newsImg = model.news.newsImg };
+            company.lastUpdete = DateTime.Now;
             db.News.Add(news);
             await db.SaveChangesAsync();
             return RedirectToAction("CompanyProfile", "CompanyProfile", new { company.companyId });
@@ -50,7 +50,7 @@ namespace CrowdFundingApp.Controllers
             news.newsImg = model.news.newsImg;
             news.newsName = model.news.newsName;
             news.newsText = model.news.newsText;
-            company.lastUpdete = DateTime.Now.ToString("dd.MM.yyyy");
+            company.lastUpdete = DateTime.Now;
             await db.SaveChangesAsync();
             return RedirectToAction("CompanyProfile", "CompanyProfile", new { companyId });
         }

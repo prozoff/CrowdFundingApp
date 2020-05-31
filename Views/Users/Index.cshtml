@@ -10,10 +10,14 @@
 {
     <form method="post">
         <div class="nl">
+            <div class="d-flex justify-content-end">
+                <a class="btn btn-sm btn-primary mr-3" asp-controller="Theme" asp-action="Index">@Localizer["Themes"]</a>
+                <button type="submit" class="btn btn-sm btn-primary mr-1" asp-action="Block">@Localizer["Block"]</button>
+                <button type="submit" class="btn btn-sm btn-primary mr-1" asp-action="Unblock">@Localizer["Unblock"]</button>
+                <button type="submit" class="btn btn-sm btn-danger" asp-action="Delete">@Localizer["Delete"]</button>
+            </div>
 
-            <button type="submit" class="btn btn-sm btn-primary" asp-action="Block">@Localizer["Block"]</button>
-            <button type="submit" class="btn btn-sm btn-primary" asp-action="Unblock">@Localizer["Unblock"]</button>
-            <button type="submit" class="btn btn-sm btn-danger" asp-action="Delete">@Localizer["Delete"]</button>
+            
 
             <table class="table table-striped table-bordered ">
 

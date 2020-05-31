@@ -13,7 +13,7 @@ namespace CrowdFundingApp.Models
         public Company company { get; set; }
         public string newsName { get; set; }
         public string newsText { get; set; }
-        public string newsDate { get; set; }
+        public DateTime newsDate { get; set; }
         public string newsImg { get; set; }
     }
 }

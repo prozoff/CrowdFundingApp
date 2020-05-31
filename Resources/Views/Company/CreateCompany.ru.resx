@@ -141,7 +141,13 @@
   <data name="Name" xml:space="preserve">
     <value>Имя</value>
   </data>
+  <data name="pasteLink" xml:space="preserve">
+    <value>Вставте ссылку сюда</value>
+  </data>
   <data name="WriteTags" xml:space="preserve">
     <value>Введите тег</value>
+  </data>
+  <data name="YouTubeLink" xml:space="preserve">
+    <value>Ссылка на видио с YouTube</value>
   </data>
 </root>

@@ -27,13 +27,18 @@ namespace CrowdFundingApp.Controllers
         public async Task<ActionResult> ProfileAsync(string name, string about, string beginDate, string endDate, double totalDonate, double needDonate, SortState sortOrder = SortState.NameAsc)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-
             ProfileViewModel model = new ProfileViewModel
             {
+                userBonus = getUserBonus(user),
                 companies = filterCompany(user, name, about, beginDate, endDate, totalDonate, needDonate, sortOrder),
                 user = user,
             };
             return View(model);
+        }
+
+        private List<UserBonus> getUserBonus(User user)
+        {
+            return db.UserBonus.Include(u => u.user).Include(b => b.bonus).Include(c => c.company).Where(u => u.user == user).ToList();
         }
 
         public async Task<IActionResult> editLoginAsync(ProfileViewModel model, string userId)
@@ -52,6 +57,7 @@ namespace CrowdFundingApp.Controllers
             await _userManager.UpdateAsync(user);
             return RedirectToAction("Profile", "Profile");
         }
+
 
         public async Task reloginAsync(User user)
         {

@@ -138,6 +138,9 @@
   <data name="Role" xml:space="preserve">
     <value>Доступ</value>
   </data>
+  <data name="Themes" xml:space="preserve">
+    <value>Темы</value>
+  </data>
   <data name="Unblock" xml:space="preserve">
     <value>Разблокировать</value>
   </data>

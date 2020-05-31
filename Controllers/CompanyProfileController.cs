@@ -23,13 +23,15 @@ namespace CrowdFundingApp.Controllers
 
         public async Task<IActionResult> CompanyProfileAsync(int companyId)
         {
-            Company company = db.Company.Include(b => b.BonusList).Include(n => n.News).Where(c => c.companyId == companyId).FirstOrDefault();
+            Company company = db.Company.Include(b => b.BonusList).Include(u => u.creater).Include(n => n.News).Where(c => c.companyId == companyId).FirstOrDefault();
             CompanyProfileViewModel model = new CompanyProfileViewModel
             {
                 companyProfile = company,
                 themeName = db.CompanyTheme.Include(t => t.theme).Where(t => t.company == company).FirstOrDefault(),
                 comments = db.Comments.Include(u => u.user).Include(l => l.LikeLists).Where(c => c.company == company).ToList(),
-                currentUser = await _userManager.GetUserAsync(HttpContext.User)
+                currentUser = await _userManager.GetUserAsync(HttpContext.User),
+                resourcesVidio = db.ResourcesLinks.FirstOrDefault(c => c.company == company && c.type == "vidio"),
+                resourcesImg = db.ResourcesLinks.Where(c => c.company == getCompanyById(companyId) && c.type == "img").ToList()
             };
 
             return View(model);
@@ -40,7 +42,7 @@ namespace CrowdFundingApp.Controllers
         {
             User user = await _userManager.GetUserAsync(HttpContext.User);
             Company company = getCompanyById(companyId);
-            Comments comment = new Comments { company = company, user = user, commentText = model.comment.commentText, commentDate = DateTime.Now.ToString(), like = 0 };
+            Comments comment = new Comments { company = company, user = user, commentText = model.comment.commentText, commentDate = DateTime.Now, like = 0 };
             db.Comments.Add(comment);
             await db.SaveChangesAsync();
             return RedirectToAction("CompanyProfile", "CompanyProfile", new { companyId });
@@ -59,15 +61,69 @@ namespace CrowdFundingApp.Controllers
             return View(model);
         }
 
+        public IActionResult toGallery(int companyId)
+        {
+            CompanyProfileViewModel model = new CompanyProfileViewModel
+            {
+                companyProfile = getCompanyById(companyId),
+                resourcesImg = db.ResourcesLinks.Where(c => c.company == getCompanyById(companyId) && c.type == "img").ToList()
+            };
+            return View("Gallery", model);
+        }
+
+        public async Task<IActionResult> addImageAsync(CompanyProfileViewModel model, int companyId)
+        {
+            Company company = getCompanyById(companyId);
+            ResourcesLinks resourcesLinks;
+            foreach (ResourcesLinks resources in model.resourcesImg)
+            {
+                resourcesLinks = new ResourcesLinks { link = resources.link, company = company, type = "img" };
+                db.ResourcesLinks.Add(resourcesLinks);
+            }
+            await db.SaveChangesAsync();
+            return RedirectToAction("CompanyProfile", "CompanyProfile", new { companyId });
+        }
+
         public IActionResult Save(CompanyProfileViewModel model, int companyId)
         {
             Company company = getCompanyById(companyId);
+            addVidio(model, company);
             company.companyName = model.companyProfile.companyName;
             company.about = model.companyProfile.about;
             company.companyImg = model.companyProfile.companyImg;
-            company.lastUpdete = DateTime.Now.ToString("dd.MM.yyyy");
+            company.lastUpdete = DateTime.Now;
             db.SaveChanges();
             return RedirectToAction("CompanyProfile", "CompanyProfile", new { company.companyId });
+        }
+
+        private void addVidio(CompanyProfileViewModel model, Company company)
+        {
+            ResourcesLinks resourcesLink = db.ResourcesLinks.FirstOrDefault(c => c.company == company);
+            string editedLink = editLink(model.resourcesVidio.link);
+            if(resourcesLink == null)
+            {
+                resourcesLink = new ResourcesLinks { company = company, link = editedLink, type = "vidio" };
+                db.ResourcesLinks.Add(resourcesLink);
+            }
+            else
+            {
+                resourcesLink.link = editedLink;
+            }
+        }
+
+        private string editLink(string link)
+        {
+            if (link != null)
+            {
+                if (link.Contains("/watch?v=") || link.Contains("youtu.be"))
+                {
+                    int index = link.IndexOf("/watch?v=");
+                    link = link.Substring(index + 9);
+                    link = "https://www.youtube.com/embed/" + link;
+                    return link;
+                }
+            }
+            return "";
         }
 
         public async Task<IActionResult> saveBonusAsync(CompanyProfileViewModel model, int companyId)
@@ -107,12 +163,30 @@ namespace CrowdFundingApp.Controllers
 
         public IActionResult deleteCompany(int companyId)
         {
-            Company company = db.Company.Include(t => t.CompanyTheme).Include(c => c.Comments).Include(t => t.CompanyTag).Include(n => n.News).Include(b => b.BonusList).Where(c => c.companyId == companyId).FirstOrDefault(); //bad idea but it worked (check caskade delete)
+            Company company = db.Company.Include(t => t.CompanyTheme)
+                .Include(c => c.Comments)
+                .Include(t => t.CompanyTag)
+                .Include(n => n.News)
+                .Include(b => b.BonusList)
+                .Include(u => u.UserBonus)
+                .Include(u => u.userDonates)
+                .Include(r => r.ResourcesLinks)
+                .Where(c => c.companyId == companyId)
+                .FirstOrDefault();
+            removeBonuses(company);
             db.Company.Remove(company);
             db.SaveChanges();
             return RedirectToAction("index", "Home");
         }
 
+        private void removeBonuses(Company company)
+        {
+            List<UserBonus> userBonuses = db.UserBonus.Where(c => c.company == company || c.company == null).ToList();
+            foreach(UserBonus userBonus in userBonuses)
+            {
+                db.UserBonus.Remove(userBonus);
+            }
+        }
 
         public async Task<IActionResult> likeAsync(CompanyProfileViewModel model, int companyId)
         {
@@ -222,7 +296,7 @@ namespace CrowdFundingApp.Controllers
 
         private Company getCompanyById(int companyId)
         {
-            return db.Company.Where(c => c.companyId == companyId).FirstOrDefault();
+            return db.Company.Where(c => c.companyId == companyId).Include(u => u.creater).FirstOrDefault();
         }
     }
 }

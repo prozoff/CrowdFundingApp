@@ -17,9 +17,12 @@ namespace CrowdFundingApp.ViewModels
         public List<Comments> comments { get; set; }
         public Comments comment { get; set; }
         public User currentUser { get; set; }
+        public ResourcesLinks resourcesVidio { get; set; }
+        public List<ResourcesLinks> resourcesImg { get; set; }
 
         public CompanyProfileViewModel()
         {
+            resourcesImg = new List<ResourcesLinks>();
             bonusList = new List<BonusList>();
             comments = new List<Comments>();
         }

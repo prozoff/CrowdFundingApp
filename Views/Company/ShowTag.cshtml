@@ -1,0 +1,21 @@
+﻿@model CrowdFundingApp.ViewModels.CompanyViewModel
+@{
+    ViewData["Title"] = "ShowTag";
+}
+<div>
+    @foreach (CompanyTag company in Model.companyTags)
+    {
+        <div class="media mb-3">
+            <img src="@company.company.companyImg" height="128" width="128" class="align-self-start mr-3" alt="...">
+            <div class="media-body">
+                <h5 class="mt-0">@company.company.companyName</h5>
+                <p>@company.company.about</p>
+                <hr />
+                <div class="row">
+                    <small class="mr-2">Rating : @company.company.rating</small>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+

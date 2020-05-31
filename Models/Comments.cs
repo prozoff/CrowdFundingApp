@@ -13,7 +13,7 @@ namespace CrowdFundingApp.Models
         public Company company { get; set; }
         public User user { get; set; }
         public string commentText { get; set; }
-        public string commentDate { get; set; }
+        public DateTime commentDate { get; set; }
         public int like { get; set; }
         
         public List<LikeList> LikeLists { get; set; }

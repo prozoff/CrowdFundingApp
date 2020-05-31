@@ -12,6 +12,7 @@ namespace CrowdFundingApp.ViewModels
         public Company company { get; set; }
         public IList<string> tags { get; set; }
         public List<ThemeList> themeList { get; set; }
+        public ResourcesLinks resourcesLink { get; set; }
         
         public CreateCompanyViewModel()
         {

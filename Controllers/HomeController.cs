@@ -43,7 +43,7 @@ namespace CrowdFundingApp.Controllers
                 new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
             );
 
-            return LocalRedirect(returnUrl);
+            return LocalRedirect("~/Home/");
         }
 
         private List<Company> sortedCompanyUpdate()

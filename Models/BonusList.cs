@@ -14,7 +14,6 @@ namespace CrowdFundingApp.Models
         public Company company { get; set; }
         public double bonusCost { get; set; }
         public string aboutBonus { get; set; }
-
         public List<UserBonus> UserBonus { get; set; }
     }
 }

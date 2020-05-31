@@ -123,6 +123,9 @@
   <data name="MostPopularCompany" xml:space="preserve">
     <value>Самые популярные компании</value>
   </data>
+  <data name="Rating" xml:space="preserve">
+    <value>Рейтинг</value>
+  </data>
   <data name="Tags" xml:space="preserve">
     <value>Теги</value>
   </data>
