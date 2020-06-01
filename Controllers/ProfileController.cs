@@ -50,6 +50,15 @@ namespace CrowdFundingApp.Controllers
             return RedirectToAction("Profile","Profile");
         }
 
+        public async Task<IActionResult> editEmailAsync(ProfileViewModel model, string userId)
+        {
+            User user = await _userManager.FindByIdAsync(userId);
+            user.Email = model.user.Email;
+            await _userManager.UpdateAsync(user);
+            await reloginAsync(user);
+            return RedirectToAction("Profile", "Profile");
+        }
+
         public async Task<IActionResult> changeAvatarAsync(ProfileViewModel model, string userId)
         {
             User user = await _userManager.FindByIdAsync(userId);
@@ -58,7 +67,7 @@ namespace CrowdFundingApp.Controllers
             return RedirectToAction("Profile", "Profile");
         }
 
-
+        
         public async Task reloginAsync(User user)
         {
             await _signInManager.SignOutAsync();

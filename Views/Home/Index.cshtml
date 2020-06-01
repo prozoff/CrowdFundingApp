@@ -14,16 +14,14 @@
 <div class="col-12">
     <div class="row">
         <span>@Localizer["Tags"] : </span>
-        @{
-            int i = 0;
-        }
         @foreach (TagList tag in Model.tagLists)
         {
-            if (i > 10) { break; }
-            i++;
-            <div class="p-1">
-                <a asp-action="showTag" asp-controller="Company" asp-route-tag="@tag.tagId" class="text-white badge badge-pill badge-primary">#@tag.tagName</a>
-            </div>
+            <form asp-action="showTag" asp-controller="Company">
+                <div class="p-1">
+                    <input hidden asp-for="@Model.tag.tagId" value="@tag.tagId" />
+                    <button type="submit" class="text-white badge badge-pill badge-primary">#@tag.tagName</button>
+                </div>
+            </form>
         }
     </div>
 </div>

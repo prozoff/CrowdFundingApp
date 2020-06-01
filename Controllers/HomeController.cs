@@ -30,7 +30,7 @@ namespace CrowdFundingApp.Controllers
             {
                 lastUpdeteCompany = sortedCompanyUpdate(),
                 ratedCompany = sortedCompanyRating(),
-                tagLists = db.TagLists.ToList()
+                tagLists = db.TagLists.Take(10).ToList()
             };
             return View(model);
         }

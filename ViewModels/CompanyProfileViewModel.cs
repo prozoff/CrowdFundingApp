@@ -19,6 +19,7 @@ namespace CrowdFundingApp.ViewModels
         public User currentUser { get; set; }
         public ResourcesLinks resourcesVidio { get; set; }
         public List<ResourcesLinks> resourcesImg { get; set; }
+        public CompanyRating companyRating { get; set; }
 
         public CompanyProfileViewModel()
         {

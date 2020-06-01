@@ -217,3 +217,5 @@ D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Release\netcoreapp3.1\Razor\Views\Comp
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Release\netcoreapp3.1\Razor\Views\News\EditNews.cshtml.g.cs
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Release\netcoreapp3.1\Razor\Views\Purce\Index.cshtml.g.cs
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Release\netcoreapp3.1\Razor\Views\Shared\_SelectLanguagePartial.cshtml.g.cs
+D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Release\netcoreapp3.1\CrowdFundingApp.Resources.Views.Company.ShowTag.en.resources
+D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Release\netcoreapp3.1\CrowdFundingApp.Resources.Views.Company.ShowTag.ru.resources

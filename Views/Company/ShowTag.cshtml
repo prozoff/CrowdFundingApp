@@ -1,21 +1,28 @@
-﻿@model CrowdFundingApp.ViewModels.CompanyViewModel
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model CrowdFundingApp.ViewModels.CompanyViewModel
 @{
     ViewData["Title"] = "ShowTag";
 }
+<h5>#@Model.tag.tagName</h5>
 <div>
-    @foreach (CompanyTag company in Model.companyTags)
+    @foreach (Company company in Model.companies)
     {
         <div class="media mb-3">
-            <img src="@company.company.companyImg" height="128" width="128" class="align-self-start mr-3" alt="...">
+            <img src="@company.companyImg" height="128" width="128" class="align-self-start mr-3" alt="...">
             <div class="media-body">
-                <h5 class="mt-0">@company.company.companyName</h5>
-                <p>@company.company.about</p>
+                <h5 class="mt-0"><a asp-controller="CompanyProfile" asp-action="CompanyProfile" asp-route-companyId="@company.companyId">@company.companyName</a></h5>
+                <p>@company.about</p>
                 <hr />
                 <div class="row">
-                    <small class="mr-2">Rating : @company.company.rating</small>
+                    <small class="mr-2">Rating : @company.rating</small>
                 </div>
             </div>
         </div>
+    }
+    @if (Model.companies.Count == 0)
+    {
+        <span>@Localizer["notExist"]</span>
     }
 </div>
 

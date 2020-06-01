@@ -48,8 +48,8 @@
                         <tr>
                             <td class="col-1"><label>Email</label></td>
                             <td class="col-3">
-                                <a href="#" id="login">@Model.user.Email</a>
-                                <form id="formLogin" hidden asp-action="" asp-controller="Profile" asp-route-userId="@Model.user.Id">
+                                <a href="#" id="Email">@Model.user.Email</a>
+                                <form id="formEmail" hidden asp-action="editEmail" asp-controller="Profile" asp-route-userId="@Model.user.Id">
                                     <div class="form-row">
                                         <div class="col-auto">
                                             <input type="text" class="form-control-sm mb-2" asp-for="@Model.user.Email" value="@Model.user.Email">
@@ -177,5 +177,12 @@
     logingString.addEventListener('click', function (e) {
         logingString.setAttribute('hidden', 'true');
         formLogin.removeAttribute('hidden');
+    });
+
+    let emailString = document.getElementById("Email");
+    let formEmail = document.getElementById('formEmail');
+    emailString.addEventListener('click', function (e) {
+        emailString.setAttribute('hidden', 'true');
+        formEmail.removeAttribute('hidden');
     });
 </script>

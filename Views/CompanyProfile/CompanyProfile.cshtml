@@ -8,6 +8,7 @@
 <div class="row justify-content-start">
     <div class="col-9">
         <h4>@Model.companyProfile.companyName</h4>
+        
     </div>
     <div class="col-3">
         <div class="row justify-content-end mb-1">
@@ -45,30 +46,32 @@
         <hr />
         <div class="col-8">
             <div class="row">
-                <div class="col-4">
+                <div class="col-3">
                     <span>@Localizer["Theme"]: @Model.themeName.theme.themeName</span>
                 </div>
-                
-                <div class="col-4">
-                    <span>@Localizer["Rating"] : @Model.companyProfile.rating</span>
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <div class="rating-area">
+            </div> 
+                <div class="col-5">
+                    <div class="row">
+                        <span>@Localizer["Rating"] : @Model.companyProfile.rating</span>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <div class="rating-area">
 
-                            <input type="radio" id="star-5" name="rating" value="5">
-                            <label for="star-5" onclick="submitRating(5)"></label>
-                            <input type="radio" id="star-4" name="rating" value="4">
-                            <label for="star-4" onclick="submitRating(4)"></label>
-                            <input type="radio" id="star-3" name="rating" value="3">
-                            <label for="star-3" onclick="submitRating(3)"></label>
-                            <input type="radio" id="star-2" name="rating" value="2">
-                            <label for="star-2" onclick="submitRating(2)"></label>
-                            <input type="radio" id="star-1" name="rating" value="1">
-                            <label for="star-1" onclick="submitRating(1)"></label>
-                        </div>
-                    }
+                                <input type="radio" id="star-5" name="rating" value="5">
+                                <label for="star-5" onclick="submitRating(5)"></label>
+                                <input type="radio" id="star-4" name="rating" value="4">
+                                <label for="star-4" onclick="submitRating(4)"></label>
+                                <input type="radio" id="star-3" name="rating" value="3">
+                                <label for="star-3" onclick="submitRating(3)"></label>
+                                <input type="radio" id="star-2" name="rating" value="2">
+                                <label for="star-2" onclick="submitRating(2)"></label>
+                                <input type="radio" id="star-1" name="rating" value="1">
+                                <label for="star-1" onclick="submitRating(1)"></label>
+                            </div>
+                        }
+                    </div>
                 </div>
-            </div>
+            <hr />
 
             <p>@Localizer["About"]: @Model.companyProfile.about</p>
         </div>
@@ -114,15 +117,10 @@
 @if (Model.resourcesImg != null)
 {
     <div class="row shadow-sm p-3 mb-5 bg-white rounded">
-        @{
-            int i = 0;
-        }
         @foreach(ResourcesLinks resources in Model.resourcesImg)
         {
-            @if (i > 4) { break; }
-            i++;
             <div class="col-lg-3 col-md-4 col-6">
-                <img src="@resources.link" height="128" width="128" alt="...">
+                <img src="@resources.link" height="160" width="160">
             </div>
         }
     </div>
@@ -137,6 +135,10 @@
             <div class="media-body">
                 <h5 class="mt-0">@news.newsName</h5>
                 <p>@news.newsText</p>
+                <hr />
+                <div class="row ml-2">
+                    <small class="mr-2">@news.newsDate</small>
+                </div>
             </div>
             @if (User.Identity.Name == Model.companyProfile.creater.UserName)
             {
@@ -168,6 +170,7 @@
                     @if (User.Identity.IsAuthenticated)
                     {
                         <div class="text-right">
+                            <small class="ml-5">@comment.commentDate</small>
                             <button id="btnLike_@comment.ComemntId" class="btn btn-outline-primary btn-sm" onclick="submitForm('like', @comment.ComemntId)">+</button>
                             <span>@comment.like</span>
                             <button id="btnDisike_@comment.ComemntId" class="btn btn-outline-primary btn-sm" onclick="submitForm('dislike', @comment.ComemntId)">-</button>
@@ -208,7 +211,7 @@
 
 <script>
     $(document).ready(function () {
-        let rating = @Model.companyProfile.rating;
+        let rating = @Model.companyRating.rating;
         if (rating != 0) {
             document.getElementById('star-' + rating).setAttribute('checked', this.checked);
         }

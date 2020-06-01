@@ -217,3 +217,5 @@ D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\CrowdFundingApp.Re
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\Razor\Views\CompanyProfile\Gallery.cshtml.g.cs
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\CrowdFundingApp.Resources.Views.CompanyProfile.Gallery.en.resources
 D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\CrowdFundingApp.Resources.Views.CompanyProfile.Gallery.ru.resources
+D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\CrowdFundingApp.Resources.Views.Company.ShowTag.en.resources
+D:\Dev\Proj\Itra\Curs\CrowdFundingApp\obj\Debug\netcoreapp3.1\CrowdFundingApp.Resources.Views.Company.ShowTag.ru.resources

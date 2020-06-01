@@ -1,4 +1,6 @@
-﻿.rating-area {
+﻿
+
+.rating-area {
     overflow: hidden;
     width: 0 auto;
     margin: 0 auto;
@@ -42,6 +44,3 @@
         text-shadow: 1px 1px goldenrod;
     }
 
-.rate-area > label:active {
-    position: relative;
-}

@@ -11,6 +11,7 @@ namespace CrowdFundingApp.ViewModels
         public List<Company> lastUpdeteCompany { get; set; }
         public List<Company> ratedCompany { get; set; }
         public List<TagList> tagLists { get; set; }
+        public TagList tag { get; set; }
 
         public HomeViewModel()
         {

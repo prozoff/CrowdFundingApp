@@ -24,19 +24,30 @@ namespace CrowdFundingApp.Controllers
         public async Task<IActionResult> CompanyProfileAsync(int companyId)
         {
             Company company = db.Company.Include(b => b.BonusList).Include(u => u.creater).Include(n => n.News).Where(c => c.companyId == companyId).FirstOrDefault();
+            User user = await _userManager.GetUserAsync(HttpContext.User);
             CompanyProfileViewModel model = new CompanyProfileViewModel
             {
                 companyProfile = company,
                 themeName = db.CompanyTheme.Include(t => t.theme).Where(t => t.company == company).FirstOrDefault(),
                 comments = db.Comments.Include(u => u.user).Include(l => l.LikeLists).Where(c => c.company == company).ToList(),
-                currentUser = await _userManager.GetUserAsync(HttpContext.User),
+                currentUser = user,
+                companyRating = userRatingCompany(user, company),
                 resourcesVidio = db.ResourcesLinks.FirstOrDefault(c => c.company == company && c.type == "vidio"),
-                resourcesImg = db.ResourcesLinks.Where(c => c.company == getCompanyById(companyId) && c.type == "img").ToList()
+                resourcesImg = db.ResourcesLinks.Where(c => c.company == getCompanyById(companyId) && c.type == "img").Take(4).ToList()
             };
 
             return View(model);
         }
 
+        private CompanyRating userRatingCompany(User user, Company company)
+        {
+            CompanyRating companyRating = db.CompanyRatings.FirstOrDefault(r => r.user == user && r.company == company);
+            if (companyRating == null) 
+            {
+                companyRating = new CompanyRating { rating = 0 };
+            }
+            return companyRating;
+        }
 
         public async Task<IActionResult> addCommentAsync(CompanyProfileViewModel model, int companyId)
         {
@@ -100,6 +111,7 @@ namespace CrowdFundingApp.Controllers
         {
             ResourcesLinks resourcesLink = db.ResourcesLinks.FirstOrDefault(c => c.company == company);
             string editedLink = editLink(model.resourcesVidio.link);
+            if (editedLink == "") { return; };
             if(resourcesLink == null)
             {
                 resourcesLink = new ResourcesLinks { company = company, link = editedLink, type = "vidio" };
@@ -174,9 +186,19 @@ namespace CrowdFundingApp.Controllers
                 .Where(c => c.companyId == companyId)
                 .FirstOrDefault();
             removeBonuses(company);
+            removeCompanyTags(company);
             db.Company.Remove(company);
             db.SaveChanges();
             return RedirectToAction("index", "Home");
+        }
+
+        private void removeCompanyTags(Company company)
+        {
+            List<CompanyTag> companyTags = db.CompanyTags.Where(c => c.company == company || c.company == null).ToList();
+            foreach(CompanyTag companyTag in companyTags)
+            {
+                db.CompanyTags.Remove(companyTag);
+            }
         }
 
         private void removeBonuses(Company company)

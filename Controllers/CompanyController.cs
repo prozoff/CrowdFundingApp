@@ -36,6 +36,7 @@ namespace CrowdFundingApp.Controllers
         {
             CreateCompanyViewModel model = new CreateCompanyViewModel
             {
+                tagLists = db.TagLists.Take(10).ToList(), 
                 themeList = db.ThemeLists.ToList()
             };
             return View(model);
@@ -106,9 +107,17 @@ namespace CrowdFundingApp.Controllers
             }
         }
 
-        public IActionResult showTag(int tagId)
+        public IActionResult showTag(HomeViewModel model)
         {
-            return View(); //todo
+            TagList tagList = db.TagLists.FirstOrDefault(t => t.tagId == model.tag.tagId);
+            List<CompanyTag> companyTags = db.CompanyTags.Include(c => c.company).Where(t => t.tag == tagList).ToList();
+            List<Company> companies = new List<Company>();
+            foreach (CompanyTag companyTag in companyTags)
+            {
+                companies.Add(companyTag.company);
+            }
+            CompanyViewModel companyModel = new CompanyViewModel { companies = companies, tag = tagList };
+            return View(companyModel); //todo
         }
 
         private void addCompanyTag(TagList tag, Company company)
